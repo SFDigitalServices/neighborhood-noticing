@@ -19,7 +19,10 @@ diagram](https://github.com/codeforamerica/citygram/blob/master/images/citygram_
     * Load this using autoenv, direnv, or other
   * `cp .citygram.env.example .citygram.env`
   * `cp .citygram-services.env.example .citygram-services.env`
-    * You will probably want to set `$SOCRATA_APP_TOKEN` in order to use endpoints that consume the Socrata API
+    * Set `$SOCRATA_APP_TOKEN` in order to use endpoints that consume the Socrata API. See
+      [Socrata Application Tokens](https://dev.socrata.com/docs/app-tokens.html) for Socrata token creation instructions
+      and details. See [Socrata Applications](https://dev.socrata.com/register) to register a new application (and
+      receive a token).
 * Start dependencies
   * `docker-compose up db`
   * `docker-compose up`
