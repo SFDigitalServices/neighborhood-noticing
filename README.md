@@ -25,10 +25,13 @@ diagram](https://github.com/codeforamerica/citygram/blob/master/images/citygram_
       receive a token).
 * Start dependencies
   * `docker-compose up -d db`
+    * Starts the PostgresSQL database that citygram and citygram-services depend on
   * `docker-compose up citygram_migration citygram_services_migration`
+    * Runs the schema migrations
   * `docker-compose up`
     * TODO: have migration tasks wait for database availability so this can be reduced to just `docker-compose up`
 * `npm start`
+  * By default, binds to port 8080, but you can run `npm start -- --port=1234` to specify an alternate port
 
 ## Creating publishers
 
