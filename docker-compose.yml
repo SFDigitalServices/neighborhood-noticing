@@ -19,7 +19,7 @@ services:
       - "6379"
 
   citygram_migration:
-    image: ${DOCKER_CITYGRAM_IMAGE-citygram/citygram}
+    image: ${DOCKER_CITYGRAM_IMAGE-sfds/citygram}
     env_file:
       - '.citygram.env'
     command: bundle exec rake db:create db:migrate
