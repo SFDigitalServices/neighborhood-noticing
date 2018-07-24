@@ -22,7 +22,7 @@ services:
     image: ${DOCKER_CITYGRAM_IMAGE-sfds/citygram}
     env_file:
       - '.citygram.env'
-    command: bundle exec rake db:create db:migrate
+    command: bash -c 'sleep 2 && bundle exec rake db:create db:migrate' # TODO wait for DB availability
     links:
       - db
     depends_on:
@@ -59,7 +59,7 @@ services:
     image: ${DOCKER_CITYGRAM_SERVICES_IMAGE-sfds/citygram-services}
     env_file:
       - '.citygram-services.env'
-    command: bundle exec rake db:create db:migrate
+    command: bash -c 'sleep 2 && bundle exec rake db:create db:migrate'  # TODO wait for DB availability
     links:
       - db
     depends_on:

@@ -24,7 +24,8 @@ diagram](https://github.com/codeforamerica/citygram/blob/master/images/citygram_
       and details. See [Socrata Applications](https://dev.socrata.com/register) to register a new application (and
       receive a token).
 * Start dependencies
-  * `docker-compose up db`
+  * `docker-compose up -d db`
+  * `docker-compose up citygram_migration citygram_service_migration`
   * `docker-compose up`
     * TODO: have migration tasks wait for database availability so this can be reduced to just `docker-compose up`
 * `npm start`
