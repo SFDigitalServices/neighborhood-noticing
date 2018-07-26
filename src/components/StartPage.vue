@@ -7,15 +7,13 @@
 </template>
 
 <script>
-import Vue from 'vue'
-
 export default {
   name: 'start-page',
-  data: function() {
+  data: function () {
     return {
       lat: process.env.VUE_APP_MAP_LAT,
-      lng: process.env.VUE_APP_MAP_LNG,
+      lng: process.env.VUE_APP_MAP_LNG
     }
-  },
+  }
 }
 </script>

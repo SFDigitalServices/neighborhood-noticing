@@ -8,19 +8,19 @@
 <script>
 export default {
   name: 'event',
-  data() {
+  data () {
     return {
-      event: null,
-    };
+      event: null
+    }
   },
-  created() {
-    let _this = this;
+  created () {
+    let _this = this
     this.$citygram.getEvent(this.$route.params.id).then(function (event) {
-      _this.event = event;
+      _this.event = event
     }).catch(function (error) {
       // TODO handle error
-      console.log(error);
-    });
-  },
+      console.log(error)
+    })
+  }
 }
 </script>
