@@ -1,0 +1,79 @@
+version: "3.1"
+
+# While we attempt to contribute all changes to Citygram and Citygram Services back upstream, there can be a gap between
+# implementation and when the changes are accepted. We build and push these docker images for our forks,
+# https://github.com/SFDigitalServices/citygram and https://github.com/SFDigitalServices/citygram-services that are
+# referred to below, but can be overridden with environment variables to, e.g., point to the canonical `citygram/`
+# images
+
+services:
+  db:
+    image: mdillon/postgis
+    expose:
+      - "5432"
+    volumes: # mount data outside to persist even if image is rebuilt
+      - ./data:/var/lib/postgresql/data:rw
+  redis:
+    image: redis:3.0.3
+    expose:
+      - "6379"
+
+  citygram_migration:
+    image: ${DOCKER_CITYGRAM_IMAGE-sfds/citygram}
+    env_file:
+      - '.citygram.env'
+    command: bash -c 'sleep 2 && bundle exec rake db:create db:migrate' # TODO wait for DB availability
+    links:
+      - db
+    depends_on:
+      - db
+  citygram_sidekiq:
+    image: ${DOCKER_CITYGRAM_IMAGE-sfds/citygram}
+    env_file:
+      - '.citygram.env'
+    command: bundle exec sidekiq -c 5 -r ./app.rb
+    links:
+      - db
+      - redis
+      - citygram_services
+    depends_on:
+      - db
+      - redis
+      - citygram_migration
+  citygram:
+    image: ${DOCKER_CITYGRAM_IMAGE-sfds/citygram}
+    env_file:
+      - '.citygram.env'
+    ports:
+      - "9292"
+    links:
+      - db
+      - redis
+      - citygram_services
+    depends_on:
+      - db
+      - redis
+      - citygram_migration
+
+  citygram_services_migration:
+    image: ${DOCKER_CITYGRAM_SERVICES_IMAGE-sfds/citygram-services}
+    env_file:
+      - '.citygram-services.env'
+    command: bash -c 'sleep 2 && bundle exec rake db:create db:migrate'  # TODO wait for DB availability
+    links:
+      - db
+    depends_on:
+      - db
+  citygram_services:
+    image: ${DOCKER_CITYGRAM_SERVICES_IMAGE-sfds/citygram-services}
+    env_file:
+      - '.citygram-services.env'
+    expose:
+      - "9292"
+    ports:
+      - "9292"
+    links:
+      - db
+    depends_on:
+      - db
+      - citygram_services_migration
