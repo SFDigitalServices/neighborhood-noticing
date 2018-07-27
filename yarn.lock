@@ -6101,9 +6101,9 @@ setprototypeof@1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/setprototypeof/-/setprototypeof-1.1.0.tgz#d0bd85536887b6fe7c0d818cb962d9d91c54e656"
 
-"sfgov-pattern-lab@https://github.com/SFDigitalServices/sfgov-pattern-lab.git":
+"sfgov-pattern-lab@https://github.com/SFDigitalServices/sfgov-pattern-lab.git#do-not-run-pattern-lab-on-install":
   version "1.0.0"
-  resolved "https://github.com/SFDigitalServices/sfgov-pattern-lab.git#217764d5491ca725f11919c17cfaa47f3aef0b24"
+  resolved "https://github.com/SFDigitalServices/sfgov-pattern-lab.git#a42be8c6a1fc74b5cbc48a82ef878187a9b6369d"
   dependencies:
     bourbon "^5.0.0"
     bourbon-neat "^1.9.0"
