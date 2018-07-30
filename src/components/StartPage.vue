@@ -68,7 +68,7 @@ export default {
     findLocation: function (e) {
       let _this = this
       navigator.geolocation.getCurrentPosition(function (position) {
-        _this.$router.push({ name: 'map', params: { lat: position.coords.latitude, lng: position.coords.longitude } })
+        _this.$router.push({ name: 'map', query: { lat: position.coords.latitude, lng: position.coords.longitude } })
       })
     }
   }

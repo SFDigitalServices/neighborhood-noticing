@@ -37,13 +37,6 @@ export default {
       events: []
     }
   },
-  created () {
-    let _this = this
-    navigator.geolocation.getCurrentPosition(function (position) {
-      _this.center = L.latLng(position.coords.latitude, position.coords.longitude)
-      _this.marker = L.latLng(position.coords.latitude, position.coords.longitude)
-    })
-  },
   methods: {
     updateEvents: function (bounds) {
       let _this = this
