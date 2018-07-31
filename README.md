@@ -10,6 +10,8 @@ diagram](https://github.com/codeforamerica/citygram/blob/master/images/citygram_
 
 # Development
 
+## Quick start
+
 * Install nodejs@10.6
   * Use of [nvm](https://github.com/creationix/nvm) recommended
 * Install [`yarn`](https://yarnpkg.com)
@@ -17,6 +19,13 @@ diagram](https://github.com/codeforamerica/citygram/blob/master/images/citygram_
 * Copy environment file examples
   * `cp .env.example .env`
     * Load this using autoenv, direnv, or other
+  * Switch `VUE_APP_CITYGRAM_URL` to point to staging
+
+## Using docker-compose
+
+To run against a local Citygram and Citygram Services, do the above (minus updating `VUE_APP_CITYGRAM_URL`) and then:
+
+* Copy environment file examples
   * `cp .citygram.env.example .citygram.env`
   * `cp .citygram-services.env.example .citygram-services.env`
     * Set `$SOCRATA_APP_TOKEN` in order to use endpoints that consume the Socrata API. See
