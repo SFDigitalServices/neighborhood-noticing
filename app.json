@@ -1,0 +1,30 @@
+{
+  "name": "neighborhood-noticing",
+  "description": "Custom front-end for Citygram",
+  "scripts": {},
+  "env": {
+    "VUE_APP_CITYGRAM_URL": {
+      "required": true
+    },
+    "VUE_APP_CITYGRAM_TAG": {
+      "required": true
+    },
+    "VUE_APP_MAP_LAT": {
+      "required": true
+    },
+    "VUE_APP_MAP_LNG": {
+      "required": true
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1
+    }
+  },
+  "addons": [],
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ]
+}
