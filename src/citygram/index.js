@@ -8,7 +8,10 @@ function Citygram (citygramUrl, citygramTag) {
   return {
     getEvent: function (id) {
       return citygram.get('/events/' + id).then(function (response) {
-        return response.data
+        return Object.assign({
+          geometry: JSON.parse(response.data.geom),
+          type: 'Feature'
+        }, response.data)
       })
     },
     getEvents: function (geometry) {
