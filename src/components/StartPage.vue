@@ -30,7 +30,7 @@
   position: relative; /* needed for underlaid image */
   height: 100%;
 
-  padding-top: 100px; /* move banner down */
+  padding-top: 10%; /* move banner down */
 }
 
 /*
