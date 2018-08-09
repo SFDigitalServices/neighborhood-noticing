@@ -1,5 +1,5 @@
 <template>
-  <l-map :zoom="zoom" :center="center" @moveend="onMoveEnd">
+  <l-map :zoom="zoom" :center="center" @moveend="updateMapState" @zoomend="updateMapState">
     <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
     <l-marker :lat-lng="marker"></l-marker>
     <l-geo-json v-for="event in events"
@@ -27,7 +27,6 @@ export default {
     const lat = this.$route.query.lat || 0
     const lng = this.$route.query.lng || 0
     const zoom = this.$route.query.zoom || 20
-
     return {
       zoom: zoom,
       center: L.latLng(lat, lng),
@@ -60,7 +59,15 @@ export default {
           console.log(error)
         })
     },
-    onMoveEnd: function (e) {
+    updateMapState: function (e) {
+      const center = e.target.getCenter()
+      this.$router.replace({name: 'map',
+        query: {
+          lat: center.lat,
+          lng: center.lng,
+          zoom: e.target.getZoom()
+        }})
+
       this.updateEvents(e.target.getBounds())
     },
     openEvent: function (e) {
