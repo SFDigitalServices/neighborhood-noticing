@@ -26,7 +26,7 @@ export default {
   data () {
     const lat = this.$route.query.lat || 0
     const lng = this.$route.query.lng || 0
-    const zoom = this.$route.query.zoom || 20
+    const zoom = parseInt(this.$route.query.zoom) || 20
     return {
       zoom: zoom,
       center: L.latLng(lat, lng),
