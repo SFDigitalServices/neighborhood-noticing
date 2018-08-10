@@ -21,7 +21,7 @@ import L from 'leaflet'
 import { LMap, LTileLayer, LGeoJson, LMarker } from 'vue2-leaflet'
 
 export default {
-  name: 'notices-map',
+  name: 'EventMap',
   components: { LMap, LTileLayer, LMarker, LGeoJson },
   data () {
     const lat = this.$route.query.lat || 0
@@ -61,11 +61,12 @@ export default {
     },
     updateMapState: function (e) {
       const center = e.target.getCenter()
-      this.$router.replace({name: 'map',
+      this.$router.replace({name: 'events_map',
         query: {
           lat: center.lat,
           lng: center.lng,
-          zoom: e.target.getZoom()
+          zoom: e.target.getZoom(),
+          bounds: e.target.getBounds().toBBoxString()
         }})
 
       this.updateEvents(e.target.getBounds())

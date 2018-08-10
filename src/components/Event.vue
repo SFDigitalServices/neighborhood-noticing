@@ -73,7 +73,7 @@ import L from 'leaflet'
 import { LMap, LTileLayer, LGeoJson } from 'vue2-leaflet'
 
 import moment from 'moment'
-import { parseNumber, formatNumber } from 'libphonenumber-js'
+import formatPhoneNumber from '../filters/FormatPhoneNumber.js'
 
 export default {
   name: 'event',
@@ -98,15 +98,9 @@ export default {
     }
   },
   filters: {
+    formatPhoneNumber,
     formatDate: function (date) {
       return moment(date).format('l')
-    },
-    formatPhoneNumber: function (number) {
-      const parsed = parseNumber(number, 'US')
-      if (parsed === {}) { // couldn't parse, use original
-        return number
-      }
-      return formatNumber(parsed, 'National')
     }
   },
   computed: {
@@ -133,9 +127,5 @@ export default {
 <style>
 .map-container {
   height: 200px;
-}
-
-.section {
-  border-top: solid lightgray 1px;
 }
 </style>

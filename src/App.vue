@@ -1,5 +1,5 @@
 <template>
-  <div id="app-container">
+  <div class='container'>
 
     <!-- pattern-lab/organisms-header -->
     <header role="banner">
@@ -27,7 +27,7 @@
 </template>
 
 <style>
-#app-container {
+.container {
   height: 100%;
   margin: 0;
 
@@ -36,7 +36,7 @@
   flex-flow: column;
 }
 
-header {
+header, .section {
   border-bottom: solid lightgray 1px;
 }
 </style>
