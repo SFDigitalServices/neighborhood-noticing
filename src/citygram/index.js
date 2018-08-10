@@ -33,7 +33,7 @@ function Citygram (citygramUrl, citygramTag) {
             })
           })
         })).then(function (publisherEvents) {
-          return publisherEvents.reduce(function(acc, val) {
+          return publisherEvents.reduce(function (acc, val) {
             return acc.concat(val)
           }, [])
         })

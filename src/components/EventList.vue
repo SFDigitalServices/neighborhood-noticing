@@ -43,7 +43,7 @@ export default {
         // TODO handle error
         console.log(error)
       })
-  },
+  }
 }
 </script>
 

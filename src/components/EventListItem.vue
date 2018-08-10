@@ -42,7 +42,7 @@ export default {
   },
   filters: {
     formatPhoneNumber,
-    formatDistance: function(meters) {
+    formatDistance: function (meters) {
       const NUM_METERS_IN_A_MILE = 1609.34
       const NUM_FEET_IN_MILES = 5280
       const MIN_DISTANCE_MILES = 0.5 // minimum distance to show in miles
@@ -56,7 +56,7 @@ export default {
       return (miles * NUM_FEET_IN_MILES).toFixed(0) + ' feet'
     }
   },
-  methods : {
+  methods: {
     openEvent: function (id) {
       this.$router.push({name: 'event', params: { id }})
     }

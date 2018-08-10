@@ -15,11 +15,13 @@ export default new Router({
   routes: [
     { path: '/', component: StartPage },
     {
-      name: 'events', path: '/events', component: Events,
+      name: 'events',
+      path: '/events',
+      component: Events,
       children: [
         { name: 'events_map', path: 'map', component: EventMap },
         { name: 'events_list', path: 'list', component: EventList }
-      ],
+      ]
     },
     { name: 'event', path: ':id', component: Event }
   ]

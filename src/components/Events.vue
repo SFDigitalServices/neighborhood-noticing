@@ -22,7 +22,7 @@
 
 <script>
 export default {
-  name: 'Events',
+  name: 'Events'
 }
 </script>
 
