@@ -38,7 +38,7 @@ export default {
 
     this.$citygram.getEvents(geometry)
       .then(function (events) {
-        _this.events = events[0] // TODO why?
+        _this.events = events
       }).catch(function (error) {
         // TODO handle error
         console.log(error)
