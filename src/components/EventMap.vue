@@ -1,5 +1,5 @@
 <template>
-  <l-map :zoom="zoom" :center="center" @moveend="updateMapState" @zoomend="updateMapState">
+  <l-map ref="map" :zoom="zoom" :center="center" @ready="updateMapState" @moveend="updateMapState" @zoomend="updateMapState">
     <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
     <l-marker :lat-lng="marker"></l-marker>
     <l-geo-json v-for="event in events"
@@ -35,6 +35,12 @@ export default {
       marker: L.latLng(lat, lng),
       events: []
     }
+  },
+  mounted: function () {
+    let _this = this
+    this.$nextTick(function () {
+      _this.updateEvents(_this.$refs.map.mapObject.getBounds())
+    })
   },
   methods: {
     updateEvents: function (bounds) {
