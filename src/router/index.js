@@ -9,6 +9,8 @@ import Events from '../components/Events.vue'
 import EventList from '../components/EventList.vue'
 import EventMap from '../components/EventMap.vue'
 
+import NotificationsSignup from '../components/NotificationsSignup.vue'
+
 Vue.use(Router)
 
 export default new Router({
@@ -23,6 +25,7 @@ export default new Router({
         { name: 'events_list', path: 'list', component: EventList }
       ]
     },
-    { name: 'event', path: '/events/:id', component: Event }
+    { name: 'event', path: '/events/:id', component: Event },
+    { name: 'notifications_signup', path: '/notifications/get', component: NotificationsSignup }
   ]
 })
