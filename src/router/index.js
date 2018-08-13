@@ -23,6 +23,6 @@ export default new Router({
         { name: 'events_list', path: 'list', component: EventList }
       ]
     },
-    { name: 'event', path: ':id', component: Event }
+    { name: 'event', path: '/events/:id', component: Event }
   ]
 })
