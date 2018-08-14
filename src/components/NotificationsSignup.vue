@@ -35,17 +35,15 @@
       </fieldset>
 
       <div class='map-container'>
-        <l-map :options=map.options :bounds=map.bounds>
-          <l-tile-layer :url=map.url :attribution=map.attribution></l-tile-layer>
-
+        <static-map :bounds=mapBounds>
           <!-- center -->
-          <l-marker :lat-lng="map.marker"></l-marker>
+          <l-marker :lat-lng="marker"></l-marker>
 
           <!-- only used to determine the rectangle bounds -->
-          <l-circle ref="circle" :stroke=false :fillOpacity=0 :lat-lng=map.marker :radius=distance></l-circle>
+          <l-circle ref="circle" :stroke=false :fillOpacity=0 :lat-lng=marker :radius=distance></l-circle>
 
           <l-rectangle :bounds=subscriptionBounds></l-rectangle>
-        </l-map>
+        </static-map>
       </div>
 
       <fieldset>
@@ -71,20 +69,16 @@
 </template>
 
 <script>
-import 'leaflet/dist/leaflet.css'
-
-// fix issue with css-loader rewriting urls in leaflet CSS
-import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.webpack.css'
-import 'leaflet-defaulticon-compatibility'
-
 import L from 'leaflet'
-import { LMap, LTileLayer, LRectangle, LCircle, LMarker } from 'vue2-leaflet'
+import { LRectangle, LCircle, LMarker } from 'vue2-leaflet'
+
+import StaticMap from './StaticMap.vue'
 
 // TODO
 // wire up address field
 export default {
   name: 'NotificationsSignup',
-  components: { LMap, LTileLayer, LCircle, LRectangle, LMarker },
+  components: { StaticMap, LCircle, LRectangle, LMarker },
   data () {
     return {
       // form
@@ -95,20 +89,8 @@ export default {
 
       subscriptionBounds: [ [0, 0], [0, 0] ],
 
-      map: {
-        bounds: null,
-        marker: L.latLng(this.$store.state.userLat, this.$store.state.userLng),
-        url: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
-        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-        options: {
-          // do not let the user interact with the map
-          zoomControl: false,
-          boxZoom: false,
-          doubleClickZoom: false,
-          dragging: false,
-          scrollWheelZoom: false
-        }
-      }
+      mapBounds: null,
+      marker: L.latLng(this.$store.state.userLat, this.$store.state.userLng)
     }
   },
   watch: {
@@ -123,7 +105,7 @@ export default {
   },
   methods: {
     updateBounds: function (bounds) {
-      this.map.bounds = bounds
+      this.mapBounds = bounds
       this.subscriptionBounds = [bounds.getNorthWest(), bounds.getSouthEast()]
     },
     onSubmit: function () {
