@@ -32,7 +32,11 @@ function Citygram (citygramUrl, citygramTag) {
               return e
             })
           })
-        }))
+        })).then(function (publisherEvents) {
+          return publisherEvents.reduce(function (acc, val) {
+            return acc.concat(val)
+          }, [])
+        })
       })
     }
   }

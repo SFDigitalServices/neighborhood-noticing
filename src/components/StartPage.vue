@@ -18,7 +18,7 @@
       </div>
 
       <div>
-        <router-link :to="{ name: 'map', query: { lat: lat, lng: lng } }">Search using an address</router-link>
+        <router-link :to="{ name: 'events_map', query: { lat: lat, lng: lng } }">Search using an address</router-link>
       </div>
     </div>
     <div class="map-underlay"></div>
@@ -68,7 +68,8 @@ export default {
     findLocation: function (e) {
       let _this = this
       navigator.geolocation.getCurrentPosition(function (position) {
-        _this.$router.push({ name: 'map', query: { lat: position.coords.latitude, lng: position.coords.longitude } })
+        _this.$store.setUserLocation(position.coords.latitude, position.coords.longitude)
+        _this.$router.push({ name: 'events_map', query: { lat: position.coords.latitude, lng: position.coords.longitude } })
       })
     }
   }

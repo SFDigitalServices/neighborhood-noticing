@@ -1,5 +1,5 @@
 <template>
-  <l-map :zoom="zoom" :center="center" @moveend="onMoveEnd">
+  <l-map ref="map" :zoom="zoom" :center="center" @ready="updateMapState" @moveend="updateMapState" @zoomend="updateMapState">
     <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
     <l-marker :lat-lng="marker"></l-marker>
     <l-geo-json v-for="event in events"
@@ -21,13 +21,12 @@ import L from 'leaflet'
 import { LMap, LTileLayer, LGeoJson, LMarker } from 'vue2-leaflet'
 
 export default {
-  name: 'notices-map',
+  name: 'EventMap',
   components: { LMap, LTileLayer, LMarker, LGeoJson },
   data () {
     const lat = this.$route.query.lat || 0
     const lng = this.$route.query.lng || 0
-    const zoom = this.$route.query.zoom || 20
-
+    const zoom = parseInt(this.$route.query.zoom) || 20
     return {
       zoom: zoom,
       center: L.latLng(lat, lng),
@@ -36,6 +35,12 @@ export default {
       marker: L.latLng(lat, lng),
       events: []
     }
+  },
+  mounted: function () {
+    let _this = this
+    this.$nextTick(function () {
+      _this.updateEvents(_this.$refs.map.mapObject.getBounds())
+    })
   },
   methods: {
     updateEvents: function (bounds) {
@@ -60,7 +65,16 @@ export default {
           console.log(error)
         })
     },
-    onMoveEnd: function (e) {
+    updateMapState: function (e) {
+      const center = e.target.getCenter()
+      this.$router.replace({name: 'events_map',
+        query: {
+          lat: center.lat,
+          lng: center.lng,
+          zoom: e.target.getZoom(),
+          bounds: e.target.getBounds().toBBoxString()
+        }})
+
       this.updateEvents(e.target.getBounds())
     },
     openEvent: function (e) {
