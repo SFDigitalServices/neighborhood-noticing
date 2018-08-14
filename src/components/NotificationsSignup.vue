@@ -46,16 +46,16 @@
       <fieldset>
         <legend>How would you like to receive notifications?</legend>
 
-        <input type="radio" id="individual_text" v-model="contact_medium" value="individual_email" />
-        <label for="individual_text">Individual emails</label>
+        <input type="radio" id="individual_text" v-model="frequency" value="individual" />
+        <label for="individual">Individual emails</label>
 
-        <input type="radio" id="weekly_email" v-model="contact_medium" value="weekly_email" />
-        <label for="weekly_email">Weekly email summaries</label>
+        <input type="radio" id="weekly_email" v-model="frequency" value="weekly" />
+        <label for="weekly">Weekly email summaries</label>
       </fieldset>
 
       <div>
-        <label for="contact_address">Email address: </label>
-        <input type="text" v-model="contact_address" id="contact_address" required>
+        <label for="email">Email address: </label>
+        <input type="text" v-model="email" id="email" required>
       </div>
 
       <div>
@@ -81,8 +81,8 @@ export default {
       // form
       address: '500 Collingwood Street',
       distance: 152,
-      contact_medium: 'individual_email',
-      contact_address: '',
+      frequency: 'individual',
+      email: '',
 
       marker: L.latLng(this.$store.state.userLat, this.$store.state.userLng)
     }
@@ -108,7 +108,7 @@ export default {
   },
   methods: {
     onSubmit: function () {
-      console.log(this)
+      console.log(this.$data)
     }
   }
 }
