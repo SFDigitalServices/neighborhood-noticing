@@ -35,14 +35,11 @@
       </fieldset>
 
       <div class='map-container'>
-        <static-map :bounds=mapBounds>
+        <static-map :bounds=subscriptionBounds>
           <!-- center -->
           <l-marker :lat-lng="marker"></l-marker>
 
-          <!-- only used to determine the rectangle bounds -->
-          <l-circle ref="circle" :stroke=false :fillOpacity=0 :lat-lng=marker :radius=distance></l-circle>
-
-          <l-rectangle :bounds=subscriptionBounds></l-rectangle>
+          <l-rectangle ref="subscriptionArea" :bounds=subscriptionBounds></l-rectangle>
         </static-map>
       </div>
 
@@ -87,35 +84,32 @@ export default {
       contact_medium: 'individual_email',
       contact_address: '',
 
-      subscriptionBounds: [ [0, 0], [0, 0] ],
-
-      mapBounds: null,
       marker: L.latLng(this.$store.state.userLat, this.$store.state.userLng)
     }
   },
-  watch: {
-    // update bounds when distance and circle is redrawn
-    // attempted to do by binding the map bounds to the circle bounds, but got into a loop with the circle bounds
-    // updating every time the map bounds changed
-    distance: function (newDistance, oldDistance) {
-      this.$nextTick(() => {
-        this.updateBounds(this.$refs.circle.mapObject.getBounds())
-      })
+  computed: {
+    subscriptionBounds: function () {
+      // calculate the bounds based on the center point (lat, lng) and distance
+      // this is an approximation (only works for small distances relative to R and not close to the poles)
+      // based on https://stackoverflow.com/questions/7477003/calculating-new-longitude-latitude-from-old-n-meters
+      const R = 6378 // distance of Earth in km
+      const distance = this.distance / 2 / 1000 // extend 1/2 distance in the 4 cardinal directions, convert to km
+
+      const [latitude, longitude] = [this.$store.state.userLat, this.$store.state.userLng]
+
+      const deltaLatitude = (distance / R) * (180 / Math.PI)
+      const deltaLongitude = (distance / R) * (180 / Math.PI) / Math.cos(latitude * Math.PI / 180)
+
+      return [
+        [ latitude - deltaLatitude, longitude - deltaLongitude ],
+        [ latitude + deltaLatitude, longitude + deltaLongitude ]
+      ]
     }
   },
   methods: {
-    updateBounds: function (bounds) {
-      this.mapBounds = bounds
-      this.subscriptionBounds = [bounds.getNorthWest(), bounds.getSouthEast()]
-    },
     onSubmit: function () {
       console.log(this)
     }
-  },
-  mounted: function () {
-    this.$nextTick(() => {
-      this.updateBounds(this.$refs.circle.mapObject.getBounds())
-    })
   }
 }
 </script>
