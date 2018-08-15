@@ -61,7 +61,8 @@
 
 <script>
 import moment from 'moment'
-import { L, LGeoJson } from 'vue2-leaflet'
+import L from 'leaflet'
+import { LGeoJson } from 'vue2-leaflet'
 
 // TODO
 //   * Remove the word permit and put into data to generalize
