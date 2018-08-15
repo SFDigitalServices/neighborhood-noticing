@@ -1,7 +1,7 @@
 <template>
   <l-map ref="map" :zoom="zoom" :center="center" @ready="updateMapState" @moveend="updateMapState" @zoomend="updateMapState">
     <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
-    <l-marker :lat-lng="marker"></l-marker>
+    <l-marker @move=setCenter :lat-lng="userLocation"></l-marker>
     <l-geo-json v-for="event in events"
       :key="event.id"
       :geojson="event"
@@ -32,8 +32,9 @@ export default {
       center: L.latLng(lat, lng),
       url: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
       attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-      marker: L.latLng(lat, lng),
-      events: []
+      events: [],
+
+      state: this.$store.state
     }
   },
   mounted: function () {
@@ -41,6 +42,11 @@ export default {
     this.$nextTick(function () {
       _this.updateEvents(_this.$refs.map.mapObject.getBounds())
     })
+  },
+  computed: {
+    userLocation: function () {
+      return L.latLng(this.state.userLat, this.state.userLng)
+    }
   },
   methods: {
     updateEvents: function (bounds) {
@@ -64,6 +70,9 @@ export default {
           // TODO handle error
           console.log(error)
         })
+    },
+    setCenter: function (e) {
+      this.center = e.latlng
     },
     updateMapState: function (e) {
       const center = e.target.getCenter()

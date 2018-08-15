@@ -1,5 +1,6 @@
 <template>
   <div class='container'>
+    <location-search @place-changed=updatePlace></location-search>
     <div class="view-controls">
       <div class="router-link-container">
         <router-link
@@ -24,8 +25,16 @@
 </template>
 
 <script>
+import LocationSearch from './LocationSearch.vue'
+
 export default {
-  name: 'Events'
+  name: 'Events',
+  components: { LocationSearch },
+  methods: {
+    updatePlace: function (place) {
+      this.$store.setUserLocation(place.geometry.location.lat(), place.geometry.location.lng())
+    }
+  }
 }
 </script>
 

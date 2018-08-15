@@ -29,11 +29,15 @@ module.exports = {
     new VueLoaderPlugin(),
     new HtmlWebPackPlugin({
       template: './index.html',
-      filename: 'index.html'
+      filename: 'index.html',
+      googleMapsApiKey: process.env.VUE_APP_GOOGLE_MAPS_API_KEY
     }),
     new webpack.EnvironmentPlugin({
-      VUE_APP_CITYGRAM_URL: 'http://localhost:5000',
       VUE_APP_CITYGRAM_TAG: null,
+      VUE_APP_CITYGRAM_URL: 'http://localhost:5000',
+
+      VUE_APP_GOOGLE_MAPS_API_KEY: null,
+
       VUE_APP_MAP_LAT: 0,
       VUE_APP_MAP_LNG: 0
     })
