@@ -46,10 +46,10 @@
       <fieldset>
         <legend>How would you like to receive notifications?</legend>
 
-        <input type="radio" id="individual_text" v-model="frequency" value="individual" />
+        <input type="radio" id="individual" v-model="frequency" value="individual" />
         <label for="individual">Individual emails</label>
 
-        <input type="radio" id="weekly_email" v-model="frequency" value="weekly" />
+        <input type="radio" id="weekly" v-model="frequency" value="weekly" />
         <label for="weekly">Weekly email summaries</label>
       </fieldset>
 
