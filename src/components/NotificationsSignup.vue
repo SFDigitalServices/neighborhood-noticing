@@ -73,6 +73,8 @@ import StaticMap from './StaticMap.vue'
 
 // TODO
 // wire up address field
+// add form validation
+// actually create subscriptions
 export default {
   name: 'NotificationsSignup',
   components: { StaticMap, LCircle, LRectangle, LMarker },
