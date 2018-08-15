@@ -92,7 +92,7 @@ export default {
       // calculate the bounds based on the center point (lat, lng) and distance
       // this is an approximation (only works for small distances relative to R and not close to the poles)
       // based on https://stackoverflow.com/questions/7477003/calculating-new-longitude-latitude-from-old-n-meters
-      const R = 6378 // distance of Earth in km
+      const R = 6378 // radius of Earth in km
       const distance = this.distance / 2 / 1000 // extend 1/2 distance in the 4 cardinal directions, convert to km
 
       const [latitude, longitude] = [this.$store.state.userLat, this.$store.state.userLng]
