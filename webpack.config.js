@@ -1,5 +1,6 @@
 const HtmlWebPackPlugin = require('html-webpack-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const Dotenv = require('dotenv-webpack');
 
 const path = require('path')
 const webpack = require('webpack')
@@ -32,10 +33,9 @@ module.exports = {
       filename: 'index.html'
     }),
     new webpack.EnvironmentPlugin({
-      VUE_APP_CITYGRAM_URL: 'http://localhost:5000',
-      VUE_APP_CITYGRAM_TAG: null,
-      VUE_APP_MAP_LAT: 0,
-      VUE_APP_MAP_LNG: 0
+    }),
+    new Dotenv({
+      safe: true
     })
   ]
 }

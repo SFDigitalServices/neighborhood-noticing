@@ -18,7 +18,6 @@ diagram](https://github.com/codeforamerica/citygram/blob/master/images/citygram_
 * `yarn install`
 * Copy environment file examples
   * `cp .env.example .env`
-    * Load this using autoenv, direnv, or other
   * Switch `VUE_APP_CITYGRAM_URL` to point to staging
 * `npm start`
   * By default, binds to port 8080, but you can run `npm start -- --port=1234` to specify an alternate port
