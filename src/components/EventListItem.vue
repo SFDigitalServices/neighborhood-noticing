@@ -1,6 +1,6 @@
 <template>
   <div class='section'>
-    <h2 @click="openEvent(event.id)">
+    <h2 @click="$emit('selected', event.id)">
       {{ event.properties.type }}
     </h2>
     <p>
@@ -54,11 +54,6 @@ export default {
       }
 
       return (miles * NUM_FEET_IN_MILES).toFixed(0) + ' feet'
-    }
-  },
-  methods: {
-    openEvent: function (id) {
-      this.$router.push({name: 'event', params: { id }})
     }
   }
 }

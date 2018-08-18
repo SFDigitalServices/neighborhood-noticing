@@ -19,7 +19,13 @@
       </div>
     </div>
     <div class='container'>
-      <router-view></router-view>
+      <router-view
+        :bounds=bounds
+        @update:bounds=updateBounds
+
+        :events=events
+        @event-selected=openEvent
+         ></router-view>
     </div>
   </div>
 </template>
@@ -30,9 +36,68 @@ import LocationSearch from './LocationSearch.vue'
 export default {
   name: 'Events',
   components: { LocationSearch },
+  data () {
+    return {
+      events: [],
+      bounds: null
+    }
+  },
+  watch: {
+    '$route.query': {
+      handler: function (newQuery, oldQuery) {
+        if (newQuery.bounds) {
+          const [south, west, north, east] = newQuery.bounds.split(',').map(parseFloat)
+          this.updateBounds([
+            [south, west],
+            [north, east]
+          ])
+        }
+      },
+      immediate: true
+    }
+  },
   methods: {
+    updateBounds: function (newBounds) {
+      this.bounds = newBounds
+      this.$router.replace({
+        query: Object.assign({}, this.$route.query, {
+          // unset lat/lng to avoid map preferring this over bounds
+          lat: undefined,
+          lng: undefined,
+
+          bounds: newBounds.join(',')
+        })
+      })
+
+      this.updateEvents(newBounds)
+    },
     updatePlace: function (place) {
       this.$store.setUserLocation(place.geometry.location.lat(), place.geometry.location.lng())
+    },
+    updateEvents: function (bounds) {
+      const _this = this
+      const [[south, west], [north, east]] = bounds
+      const geometry = {
+        type: 'Polygon',
+        coordinates: [[
+          [west, south],
+          [west, north],
+          [east, north],
+          [east, south],
+          [west, south]
+        ]]
+      }
+
+      this.$citygram.getEvents(geometry)
+        .then(function (events) {
+          _this.events = events
+        }).catch(function (error) {
+          // TODO handle error
+          console.log(error)
+        })
+    },
+    openEvent: function (id) {
+      this.$router.push({name: 'event', params: { id }})
     }
   }
 }

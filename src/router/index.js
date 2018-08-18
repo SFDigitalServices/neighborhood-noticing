@@ -21,7 +21,15 @@ export default new Router({
       path: '/events',
       component: Events,
       children: [
-        { name: 'events_map', path: 'map', component: EventMap },
+        {
+          name: 'events_map',
+          path: 'map',
+          component: EventMap,
+          props: (route) => ({
+            zoom: route.query.zoom,
+            center: (route.query.lat && route.query.lng) ? [route.query.lat, route.query.lng] : undefined
+          })
+        },
         { name: 'events_list', path: 'list', component: EventList }
       ]
     },

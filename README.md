@@ -20,7 +20,8 @@ diagram](https://github.com/codeforamerica/citygram/blob/master/images/citygram_
   * `cp .env.example .env`
     * Load this using autoenv, direnv, or other
   * Set `VUE_APP_CITYGRAM_URL` to point to staging
-  * Set `VUE_APP_GOOGLE_MAPS_API_KEY` to a development Google API key with access to the Google Maps Javascript API
+  * Set `VUE_APP_GOOGLE_MAPS_API_KEY` to a development Google API key with access to the Google Maps Javascript API and
+    Google Places API
 
 ## Using docker-compose
 
