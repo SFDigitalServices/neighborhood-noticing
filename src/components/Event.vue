@@ -45,10 +45,9 @@
     <div class="section">
       <h2>Permit location</h2>
       <div class='map-container'>
-        <l-map :options=mapOptions :bounds=mapBounds>
-          <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
+        <static-map :bounds=mapBounds>
           <l-geo-json :geojson="event"></l-geo-json>
-        </l-map>
+        </static-map>
       </div>
       <p v-if="event.properties.location">
         {{ event.properties.location }}
@@ -61,40 +60,26 @@
 </template>
 
 <script>
+import moment from 'moment'
+import L from 'leaflet'
+import { LGeoJson } from 'vue2-leaflet'
+
 // TODO
 //   * Remove the word permit and put into data to generalize
-import 'leaflet/dist/leaflet.css'
-
-// fix issue with css-loader rewriting urls in leaflet CSS
-import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.webpack.css'
-import 'leaflet-defaulticon-compatibility'
-
-import L from 'leaflet'
-import { LMap, LTileLayer, LGeoJson } from 'vue2-leaflet'
-
-import moment from 'moment'
 import formatPhoneNumber from '../filters/FormatPhoneNumber.js'
+
+import StaticMap from './StaticMap.vue'
 
 export default {
   name: 'event',
-  components: { Map, LMap, LTileLayer, LGeoJson },
+  components: { StaticMap, LGeoJson },
   data () {
     return {
       event: {
         type: 'Feature',
         geometry: null,
         properties: {}
-      },
-      mapOptions: {
-        // do not let the user interact with the map
-        zoomControl: false,
-        boxZoom: false,
-        doubleClickZoom: false,
-        dragging: false,
-        scrollWheelZoom: false
-      },
-      url: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
-      attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+      }
     }
   },
   filters: {
