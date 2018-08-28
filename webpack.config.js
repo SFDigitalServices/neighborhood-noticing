@@ -39,7 +39,8 @@ module.exports = {
       VUE_APP_GOOGLE_MAPS_API_KEY: null,
 
       VUE_APP_MAP_LAT: 0,
-      VUE_APP_MAP_LNG: 0
+      VUE_APP_MAP_LNG: 0,
+      VUE_APP_MAP_ZOOM: 16, // default zoom level
     })
   ]
 }

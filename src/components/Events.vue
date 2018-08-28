@@ -20,7 +20,12 @@
     </div>
     <div class='container'>
       <router-view
-        :bounds=bounds
+        :zoom=zoom
+        @update:zoom=updateZoom
+
+        :center=center
+        @update:center=updateCenter
+
         @update:bounds=updateBounds
 
         :events=events
@@ -38,6 +43,8 @@ export default {
   components: { LocationSearch },
   data () {
     return {
+      center: [],
+      zoom: 0,
       events: [],
       bounds: null
     }
@@ -45,33 +52,41 @@ export default {
   watch: {
     '$route.query': {
       handler: function (newQuery, oldQuery) {
-        if (newQuery.bounds) {
-          const [south, west, north, east] = newQuery.bounds.split(',').map(parseFloat)
-          this.updateBounds([
-            [south, west],
-            [north, east]
-          ])
+        if (newQuery.zoom) {
+          this.zoom = Number(newQuery.zoom)
+        }
+        if (newQuery.lat && newQuery.lng) {
+          this.center = [Number(newQuery.lat), Number(newQuery.lng)]
         }
       },
       immediate: true
     }
   },
   methods: {
-    updateBounds: function (newBounds) {
-      this.bounds = newBounds
+    updateZoom: function(newZoom) {
+      this.zoom = newZoom
+
       this.$router.replace({
         query: Object.assign({}, this.$route.query, {
-          // unset lat/lng to avoid map preferring this over bounds
-          lat: undefined,
-          lng: undefined,
-
-          bounds: newBounds.join(',')
+          zoom: newZoom
         })
       })
+    },
+    updateCenter: function(newCenter) {
+      this.center = newCenter
 
+      this.$router.replace({
+        query: Object.assign({}, this.$route.query, {
+          lat: newCenter[0],
+          lng: newCenter[1],
+        })
+      })
+    },
+    updateBounds: function (newBounds) {
       this.updateEvents(newBounds)
     },
     updatePlace: function (place) {
+      this.updateCenter([place.geometry.location.lat(), place.geometry.location.lng()])
       this.$store.setUserLocation(place.geometry.location.lat(), place.geometry.location.lng())
     },
     updateEvents: function (bounds) {

@@ -3,7 +3,6 @@
           :zoom="zoom"
           :center="lCenter"
 
-          :bounds="lBounds"
           @moveend="moveEnd"
           >
     <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
@@ -40,10 +39,6 @@ export default {
       type: Number,
       default: 20
     },
-    bounds: {
-      type: Array, // [[south, west], [north, east]]
-      default: () => []
-    },
     events: {
       type: Array,
       default: () => []
@@ -51,8 +46,6 @@ export default {
   },
   data () {
     return {
-      lCenter: this.center,
-
       url: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
       attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
 
@@ -63,13 +56,10 @@ export default {
     userLocation: function () {
       return [this.state.userLat, this.state.userLng]
     },
-    lBounds: function () {
-      if (!this.bounds) {
-        return null
-      }
-
-      return new L.LatLngBounds(L.latLng(this.bounds[0]), L.latLng(this.bounds[1]))
-    }
+    lCenter: function() {
+      // passing new object to avoid vue2leaflet updating the center by reference
+      return L.latLng(this.center[0], this.center[1])
+    },
   },
   methods: {
     moveEnd: function (e) {
@@ -78,21 +68,22 @@ export default {
         [bounds.getSouth(), bounds.getWest()],
         [bounds.getNorth(), bounds.getEast()]
       ]
-      if (_.isEqual(this.bounds, newBounds)) {
-        return
+      if (!_.isEqual(this.bounds, newBounds)) {
+        this.$emit('update:bounds', newBounds)
       }
-      this.$emit('update:bounds', newBounds)
+
+      const newCenter = [e.target.getCenter().lat, e.target.getCenter().lng]
+      if (!_.isEqual(this.center, newCenter)) {
+        this.$emit('update:center', newCenter)
+      }
+
+      const newZoom = e.target.getZoom()
+      if (!_.isEqual(this.zoom, newZoom)) {
+        this.$emit('update:zoom', e.target.getZoom())
+      }
     },
     openEvent: function (e) {
       this.$emit('event-selected', e.layer.feature.id)
-    }
-  },
-  watch: {
-    userLocation: {
-      handler: function (newLocation, oldLocation) {
-        this.lCenter = newLocation
-      },
-      deep: true
     }
   }
 }
