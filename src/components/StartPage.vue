@@ -4,16 +4,15 @@
     <!-- pattern-lab/molecules-hero-banner -->
     <header class="sfgov-banner">
       <div class="sfgov-banner__container sfgov-container">
-        <h1>Get information about projects near you.</h1>
-        <h3 class="lead-paragraph">
-          Discover projects, events and closures in San Francisco's neighborhoods. Also you can request future
-          notifications.
-        </h3>
+        <h1>Learn about projects happening in your area.</h1>
+        <div>
+          Discover and receive notifications about projects, events and closures happening in San Francisco neighborhoods.
+        </div>
       </div>
     </header>
 
     <div class="nav-buttons">
-      <div>
+      <div class="main">
         <button @click="findLocation" class="sfgov-button">Get Started</button>
       </div>
 
@@ -30,7 +29,7 @@
   position: relative; /* needed for underlaid image */
   height: 100%;
 
-  padding-top: 10%; /* move banner down */
+  padding-top: 15%; /* move banner down */
 }
 
 /*
@@ -46,13 +45,36 @@
   background-image: url(../assets/img/map.png);
   width: 100%;
   height: 100%;
-  opacity : 0.2;
+  opacity : 0.3;
   z-index: -1;
 }
 
 .nav-buttons {
   text-align: center;
 }
+
+.sfgov-banner{ 
+  background: #0071bc;
+  color: #fff;
+ }
+
+ .sfgov-banner h1 {
+  color: #fff;
+  padding: 1.5rem 0;
+  margin: 0;
+ }
+
+ .nav-buttons {
+  padding-top: 3rem;
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+  .nav-buttons .main {
+    margin-bottom: 1.5rem;
+  }
+
 </style>
 
 <script>
