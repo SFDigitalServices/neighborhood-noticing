@@ -1,6 +1,5 @@
 <template>
   <div id='start-page'>
-
     <!-- pattern-lab/molecules-hero-banner -->
     <header class="sfgov-banner">
       <div class="sfgov-banner__container sfgov-container">
@@ -24,7 +23,28 @@
   </div>
 </template>
 
-<style>
+<script>
+export default {
+  name: 'start-page',
+  data: function () {
+    return {
+      lat: process.env.VUE_APP_MAP_LAT,
+      lng: process.env.VUE_APP_MAP_LNG
+    }
+  },
+  methods: {
+    findLocation: function (e) {
+      let _this = this
+      navigator.geolocation.getCurrentPosition(function (position) {
+        _this.$store.setUserLocation(position.coords.latitude, position.coords.longitude)
+        _this.$router.push({ name: 'events_map', query: { lat: position.coords.latitude, lng: position.coords.longitude } })
+      })
+    }
+  }
+}
+</script>
+
+<style scoped>
 #start-page {
   position: relative; /* needed for underlaid image */
   height: 100%;
@@ -51,49 +71,13 @@
 
 .nav-buttons {
   text-align: center;
-}
-
-.sfgov-banner{ 
-  background: #0071bc;
-  color: #fff;
- }
-
- .sfgov-banner h1 {
-  color: #fff;
-  padding: 1.5rem 0;
-  margin: 0;
- }
-
- .nav-buttons {
   padding-top: 3rem;
   width: 70%;
   margin-left: auto;
   margin-right: auto;
 }
 
-  .nav-buttons .main {
-    margin-bottom: 1.5rem;
-  }
-
-</style>
-
-<script>
-export default {
-  name: 'start-page',
-  data: function () {
-    return {
-      lat: process.env.VUE_APP_MAP_LAT,
-      lng: process.env.VUE_APP_MAP_LNG
-    }
-  },
-  methods: {
-    findLocation: function (e) {
-      let _this = this
-      navigator.geolocation.getCurrentPosition(function (position) {
-        _this.$store.setUserLocation(position.coords.latitude, position.coords.longitude)
-        _this.$router.push({ name: 'events_map', query: { lat: position.coords.latitude, lng: position.coords.longitude } })
-      })
-    }
-  }
+.nav-buttons .main {
+  margin-bottom: 1.5rem;
 }
-</script>
+</style>

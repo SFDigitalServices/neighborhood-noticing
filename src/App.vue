@@ -2,7 +2,7 @@
   <div class='container'>
 
     <!-- pattern-lab/organisms-header -->
- <header role="banner">
+    <header role="banner">
       <div class="sfgov-container--full sfgov-nav-container">
         <div class="sfgov-nav-container__content">
           <button class="sfgov-menu-btn">Menu</button>
@@ -19,7 +19,7 @@
               </span>
             </a>
           </div>
-      <!--<nav class="sfgov-main-navigation">
+          <!--<nav class="sfgov-main-navigation">
             <ul>
               <li><a href="#">Get future notifications</a></li>
               <li><a href="#">About Neighborhood Notification</a></li>
@@ -35,6 +35,15 @@
   </div>
 </template>
 
+<script>
+import 'sfgov-pattern-lab/dist/css/components.css'
+import './assets/css/sfgov-pattern-lab-overrides.css'
+
+export default {
+  name: 'app'
+}
+</script>
+
 <style>
 .container {
   height: 100%;
@@ -45,25 +54,10 @@
   flex-flow: column;
 }
 
-header, .section {border-bottom: solid #aeb0b5 1px;}
-
-.sfgov-logo__text--title {font-size: .875em !important;}
-
-.sfgov-logo__container .sfgov-logo .sfgov-logo__image {
-    min-width: 45px !important;
+header, .section {
+  border-bottom: solid #aeb0b5 1px;
 }
-
-.sfgov-logo__container .sfgov-logo .sfgov-logo__image img {
-    max-width: 45px !important;
-}
-
-
 </style>
 
-<script>
-import 'sfgov-pattern-lab/dist/css/components.css'
-
-export default {
-  name: 'app'
-}
-</script>
+<style scoped>
+<style>

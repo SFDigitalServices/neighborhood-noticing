@@ -1,0 +1,26 @@
+.sfgov-banner {
+  background: #0071bc;
+  color: #fff;
+}
+
+.sfgov-banner h1 {
+  color: #fff;
+  font-weight: normal;
+  font-size: 1.75em;
+
+  line-height: 1.4;
+  margin: 0 0 .75em;
+  padding: 0;
+}
+
+.sfgov-logo__text--title {
+  font-size: .875em !important;
+}
+
+.sfgov-logo__container .sfgov-logo .sfgov-logo__image {
+  min-width: 45px !important;
+}
+
+.sfgov-logo__container .sfgov-logo .sfgov-logo__image img {
+  max-width: 45px !important;
+}
