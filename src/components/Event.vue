@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- pattern-lab/molecules-hero-banner -->
     <div class='map-container'>
       <l-map :options=mapOptions :bounds=mapBounds>
         <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
@@ -8,8 +7,8 @@
       </l-map>
     </div>
 
+    <!-- pattern-lab/molecules-hero-banner -->
     <header class="sfgov-banner">
-
       <div class="sfgov-banner__container sfgov-container">
         <h1>{{ event.properties.type }} Permit</h1>
 
@@ -136,17 +135,7 @@ export default {
 }
 </script>
 
-<style>
-
-.sfgov-banner h1 {
-  font-family: "Merriweather","Georgia",sans-serif; 
-  font-weight: normal;
-  font-size: 1.75em;
-  line-height: 1.4;
-  margin: 0 0 .75em;
-  padding: 0;
-}
-
+<style scoped>
 .section h2 {
   font-family: "Roboto", san-serif;
   font-size: 1em;
@@ -164,10 +153,12 @@ p {
 }
 
 .dates, .location {
-  font-weight:700;
+  font-weight: 700;
 }
 
-.location {margin-bottom: .25em;}
+.location {
+  margin-bottom: .25em;
+}
 
 .map-container {
   height: 200px;

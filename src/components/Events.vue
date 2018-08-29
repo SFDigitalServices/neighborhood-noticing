@@ -29,7 +29,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .view-controls {
   background: #d6d7d9;
   padding: .25rem 1rem .75rem;
@@ -78,5 +78,4 @@ export default {
   background: #757575;
   color: #f1f1f1;
 }
-
 </style>
