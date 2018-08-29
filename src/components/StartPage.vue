@@ -30,7 +30,7 @@ export default {
     return {
       lat: process.env.VUE_APP_MAP_LAT,
       lng: process.env.VUE_APP_MAP_LNG,
-      zoom: process.env.VUE_APP_MAP_ZOOM,
+      zoom: process.env.VUE_APP_MAP_ZOOM
     }
   },
   methods: {

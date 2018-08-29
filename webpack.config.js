@@ -40,7 +40,7 @@ module.exports = {
 
       VUE_APP_MAP_LAT: 0,
       VUE_APP_MAP_LNG: 0,
-      VUE_APP_MAP_ZOOM: 16, // default zoom level
+      VUE_APP_MAP_ZOOM: 16 // default zoom level
     })
   ]
 }

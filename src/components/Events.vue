@@ -19,14 +19,12 @@
       </div>
     </div>
     <div class='container'>
-      <router-view
+      <router-view ref="view"
         :zoom=zoom
         @update:zoom=updateZoom
 
         :center=center
         @update:center=updateCenter
-
-        @update:bounds=updateBounds
 
         :events=events
         @event-selected=openEvent
@@ -38,15 +36,18 @@
 <script>
 import LocationSearch from './LocationSearch.vue'
 
+import _ from 'lodash'
+import { bboxPolygon, destination } from '@turf/turf'
+
 export default {
   name: 'Events',
   components: { LocationSearch },
   data () {
     return {
-      center: [],
+      center: [0, 0],
       zoom: 0,
-      events: [],
-      bounds: null
+
+      events: []
     }
   },
   watch: {
@@ -62,55 +63,84 @@ export default {
       immediate: true
     }
   },
+  mounted: function () {
+    this.$nextTick(() => {
+      this.refreshEvents()
+    })
+  },
   methods: {
-    updateZoom: function(newZoom) {
+    updateZoom: function (newZoom) {
       this.zoom = newZoom
 
       this.$router.replace({
         query: Object.assign({}, this.$route.query, {
-          zoom: newZoom
+          zoom: newZoom,
+          lat: this.center[0],
+          lng: this.center[1]
         })
       })
+
+      this.refreshEvents()
     },
-    updateCenter: function(newCenter) {
+
+    updateCenter: function (newCenter) {
       this.center = newCenter
 
       this.$router.replace({
         query: Object.assign({}, this.$route.query, {
+          zoom: this.zoom,
           lat: newCenter[0],
-          lng: newCenter[1],
+          lng: newCenter[1]
         })
       })
+
+      this.refreshEvents()
     },
-    updateBounds: function (newBounds) {
-      this.updateEvents(newBounds)
-    },
+
     updatePlace: function (place) {
+      // doesn't work when map is open due to pan animations
+      // https://github.com/KoRiGaN/Vue2Leaflet/issues/170
+      this.updateZoom(process.env.VUE_APP_MAP_ZOOM)
       this.updateCenter([place.geometry.location.lat(), place.geometry.location.lng()])
+
       this.$store.setUserLocation(place.geometry.location.lat(), place.geometry.location.lng())
     },
-    updateEvents: function (bounds) {
-      const _this = this
-      const [[south, west], [north, east]] = bounds
-      const geometry = {
-        type: 'Polygon',
-        coordinates: [[
-          [west, south],
-          [west, north],
-          [east, north],
-          [east, south],
-          [west, south]
-        ]]
+
+    refreshEvents: _.debounce(function () {
+      // Calculate bounding box of view from the diagonal in pixels, converted to kilometers at the given latitude
+      // This allows, when querying by address on the list view, for it to pull the events that would show if the map is
+      // viewed
+      //
+      // Note: This is an approximation as the number of km per pixel varies by the latitude, but should be fine for
+      //       small distances
+      // Note: Expects map to be using EPSG:3857 CRS
+
+      const kilometersPerPixel = function (latitude, zoom) {
+        // From https://wiki.openstreetmap.org/wiki/Zoom_levels
+        const earthCircumference = 40075.017 // kilometers
+
+        return earthCircumference * Math.cos(latitude) / Math.pow(2, zoom + 8)
       }
 
-      this.$citygram.getEvents(geometry)
-        .then(function (events) {
-          _this.events = events
-        }).catch(function (error) {
-          // TODO handle error
-          console.log(error)
-        })
-    },
+      const diagonalPixels = Math.sqrt(Math.pow(this.$refs.view.$el.clientHeight, 2), Math.pow(this.$refs.view.$el.clientWidth, 2))
+
+      const centerPoint = [this.center[1], this.center[0]] // turf wants [lng, lat]
+      const diagonalDistance = diagonalPixels / 2 * kilometersPerPixel(this.center[0], this.zoom)
+      const northEastBound = destination(centerPoint, diagonalDistance, 45, {units: 'kilometers'})
+      const southWestBound = destination(centerPoint, diagonalDistance, -135, {units: 'kilometers'})
+
+      const bboxFeature = bboxPolygon([
+        southWestBound.geometry.coordinates[0],
+        southWestBound.geometry.coordinates[1],
+        northEastBound.geometry.coordinates[0],
+        northEastBound.geometry.coordinates[1]
+      ])
+
+      this.$citygram.getEvents(bboxFeature.geometry)
+        .then((events) => { this.events = events })
+        .catch((error) => console.log(error)) // TODO handle error
+    }, 500),
+
     openEvent: function (id) {
       this.$router.push({name: 'event', params: { id }})
     }

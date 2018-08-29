@@ -56,22 +56,14 @@ export default {
     userLocation: function () {
       return [this.state.userLat, this.state.userLng]
     },
-    lCenter: function() {
-      // passing new object to avoid vue2leaflet updating the center by reference
+    lCenter: function () {
+      // passing new object to avoid vue2leaflet updating the center array by reference
+      // https://vuejs.org/v2/guide/list.html#Caveats
       return L.latLng(this.center[0], this.center[1])
-    },
+    }
   },
   methods: {
     moveEnd: function (e) {
-      const bounds = e.target.getBounds()
-      const newBounds = [
-        [bounds.getSouth(), bounds.getWest()],
-        [bounds.getNorth(), bounds.getEast()]
-      ]
-      if (!_.isEqual(this.bounds, newBounds)) {
-        this.$emit('update:bounds', newBounds)
-      }
-
       const newCenter = [e.target.getCenter().lat, e.target.getCenter().lng]
       if (!_.isEqual(this.center, newCenter)) {
         this.$emit('update:center', newCenter)
