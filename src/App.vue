@@ -2,9 +2,10 @@
   <div class='container'>
 
     <!-- pattern-lab/organisms-header -->
-    <header role="banner">
+ <header role="banner">
       <div class="sfgov-container--full sfgov-nav-container">
         <div class="sfgov-nav-container__content">
+          <button class="sfgov-menu-btn">Menu</button>
           <div class="sfgov-logo__container">
             <a href="/" class="branding-link">
               <span class="sfgov-logo">
@@ -12,17 +13,25 @@
                   <img :src="require('sfgov-pattern-lab/dist/images/sf-logo.svg')" alt="alt text"/>
                 </span>
                 <span class="sfgov-logo__text">
-                  <span class="sfgov-logo__text--pre-title">CITY &amp; COUNTY OF</span>
-                  <span class="sfgov-logo__text--title">San Francisco</span>
+                  <span class="sfgov-logo__text--pre-title">CITY &amp; COUNTY OF SAN FRANCISCO</span>
+                  <span class="sfgov-logo__text--title">Neighborhood Notifications</span>
                 </span>
               </span>
             </a>
           </div>
+      <!--<nav class="sfgov-main-navigation">
+            <ul>
+              <li><a href="#">Get future notifications</a></li>
+              <li><a href="#">About Neighborhood Notification</a></li>
+              <li><a href="#">Privacy Policy</a></li>
+            </ul>
+          </nav>-->
         </div>
       </div>
     </header>
 
     <router-view></router-view>
+
   </div>
 </template>
 
@@ -36,9 +45,19 @@
   flex-flow: column;
 }
 
-header, .section {
-  border-bottom: solid lightgray 1px;
+header, .section {border-bottom: solid #aeb0b5 1px;}
+
+.sfgov-logo__text--title {font-size: .875em !important;}
+
+.sfgov-logo__container .sfgov-logo .sfgov-logo__image {
+    min-width: 45px !important;
 }
+
+.sfgov-logo__container .sfgov-logo .sfgov-logo__image img {
+    max-width: 45px !important;
+}
+
+
 </style>
 
 <script>
