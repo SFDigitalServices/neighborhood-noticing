@@ -10,6 +10,7 @@
     <l-geo-json v-for="event in events"
       :key="event.id"
       :geojson="event"
+      :options=eventOptions
       @click="openEvent"
     ></l-geo-json>
   </l-map>
@@ -49,7 +50,20 @@ export default {
       url: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
       attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
 
-      state: this.$store.state
+      state: this.$store.state,
+      eventOptions: {
+        // convert points to small circles
+        pointToLayer: function (feature, latlng) {
+          return L.circleMarker(latlng, {
+            radius: 8,
+            fillColor: '#0071bc', // same color as primary buttons
+            color: '#000',
+            weight: 1,
+            opacity: 1,
+            fillOpacity: 0.8
+          })
+        }
+      }
     }
   },
   computed: {
