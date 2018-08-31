@@ -122,7 +122,7 @@ export default {
         return earthCircumference * Math.cos(latitude) / Math.pow(2, zoom + 8)
       }
 
-      const diagonalPixels = Math.sqrt(Math.pow(this.$refs.view.$el.clientHeight, 2), Math.pow(this.$refs.view.$el.clientWidth, 2))
+      const diagonalPixels = Math.hypot(this.$refs.view.$el.clientHeight, this.$refs.view.$el.clientWidth)
 
       const centerPoint = [this.center[1], this.center[0]] // turf wants [lng, lat]
       const diagonalDistance = diagonalPixels / 2 * kilometersPerPixel(this.center[0], this.zoom)
