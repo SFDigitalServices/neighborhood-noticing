@@ -6,7 +6,7 @@
           @moveend="moveEnd"
           >
     <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
-    <l-marker :lat-lng="userLocation"></l-marker>
+    <l-control-locate :locate-on-mount=locateOnMount @locationfound=locationFound></l-control-locate>
     <l-geo-json v-for="event in events"
       :key="event.id"
       :geojson="event"
@@ -27,10 +27,11 @@ import 'leaflet-defaulticon-compatibility'
 
 import L from 'leaflet'
 import { LMap, LTileLayer, LGeoJson, LMarker } from 'vue2-leaflet'
+import LControlLocate from './LControlLocate.vue'
 
 export default {
   name: 'EventMap',
-  components: { LMap, LTileLayer, LMarker, LGeoJson },
+  components: { LMap, LTileLayer, LMarker, LGeoJson, LControlLocate },
   props: {
     center: {
       type: Array, // [lat, lng]
@@ -46,11 +47,13 @@ export default {
     }
   },
   data () {
+    const locate = ('locate' in this.$route.query)
     return {
       url: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
       attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
 
       state: this.$store.state,
+      locateOnMount: locate,
       eventOptions: {
         // convert points to small circles
         pointToLayer: function (feature, latlng) {
@@ -88,6 +91,11 @@ export default {
         this.$emit('update:zoom', e.target.getZoom())
       }
     },
+
+    locationFound: function (loc) {
+      this.$store.setUserLocation(loc.latitude, loc.longitude)
+    },
+
     openEvent: function (e) {
       this.$emit('event-selected', e.layer.feature.id)
     }

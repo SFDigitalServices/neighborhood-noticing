@@ -3,8 +3,8 @@
 function Store () {
   return {
     state: { // do not mutate directly
-      userLat: Number(process.env.VUE_APP_MAP_LAT),
-      userLng: Number(process.env.VUE_APP_MAP_LNG)
+      userLat: null,
+      userLng: null
     },
 
     setUserLocation: function (lat, lng) {
