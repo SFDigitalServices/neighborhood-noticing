@@ -66,7 +66,7 @@ export default {
   background-image: url(../assets/img/map.png);
   width: 100%;
   height: 100%;
-  opacity : 0.3;
+  opacity : 0.5;
   z-index: -1;
 }
 
