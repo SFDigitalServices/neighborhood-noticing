@@ -16,7 +16,7 @@
       </div>
 
       <div>
-        <router-link :to="{ name: 'events_map', query: { lat: lat, lng: lng, zooom: zoom } }">Search using an address</router-link>
+        <router-link :to="{ name: 'events_map', query: { lat: lat, lng: lng, zoom: zoom } }">Search using an address</router-link>
       </div>
     </div>
     <div class="map-underlay"></div>
