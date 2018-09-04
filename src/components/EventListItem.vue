@@ -1,5 +1,8 @@
 <template>
-  <div class='section'>
+  <div class='section list-item'>
+    <p class="miles-away">
+      {{ event_distance | formatDistance }}
+    </p>
     <h2 @click="$emit('selected', event.id)">
       {{ event.properties.type }}
     </h2>
@@ -7,16 +10,13 @@
       {{ event.properties.location }}
     </p>
     <p>
-      Requester: {{ event.properties.originator }}
+      <b>Requester:</b> {{ event.properties.originator }}
     </p>
     <p>
-      Contact: <a :href="'tel:' + this.$options.filters.formatPhoneNumber(event.properties.originator_phone)">{{ event.properties.originator_phone | formatPhoneNumber }}</a>
+      <b>Contact:</b> <a :href="'tel:' + this.$options.filters.formatPhoneNumber(event.properties.originator_phone)">{{ event.properties.originator_phone | formatPhoneNumber }}</a>
     </p>
     <p>
-      Distance: {{ event_distance | formatDistance }}
-    </p>
-    <p>
-      Permit {{ event.properties.id }}
+      <b>Permit #</b>: {{ event.properties.id }}
     </p>
   </div>
 </template>
@@ -60,4 +60,24 @@ export default {
 </script>
 
 <style scoped>
+  .list-item {
+    padding: 0 10rem 1rem 2rem;
+    position: relative;
+  }
+  .list-item h2 {
+    font-size: 2rem;
+    margin-bottom: .75rem;
+    margin-top: 1rem;
+  }
+  .list-item p {
+    margin-top: 0;
+    margin-bottom: .5rem;
+    font-size: 14px;
+  }
+  .miles-away {
+    position: absolute;
+    top: .25rem;
+    right: 1.3rem;
+  }
+
 </style>
