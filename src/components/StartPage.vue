@@ -16,7 +16,7 @@
       </div>
 
       <div>
-        <router-link :to="{ name: 'events_map', query: { lat: lat, lng: lng } }">Search using an address</router-link>
+        <router-link :to="{ name: 'events_map', query: { lat: lat, lng: lng, zoom: zoom } }">Search using an address</router-link>
       </div>
     </div>
     <div class="map-underlay"></div>
@@ -29,7 +29,8 @@ export default {
   data: function () {
     return {
       lat: process.env.VUE_APP_MAP_LAT,
-      lng: process.env.VUE_APP_MAP_LNG
+      lng: process.env.VUE_APP_MAP_LNG,
+      zoom: process.env.VUE_APP_MAP_ZOOM
     }
   },
   methods: {
@@ -37,7 +38,7 @@ export default {
       let _this = this
       navigator.geolocation.getCurrentPosition(function (position) {
         _this.$store.setUserLocation(position.coords.latitude, position.coords.longitude)
-        _this.$router.push({ name: 'events_map', query: { lat: position.coords.latitude, lng: position.coords.longitude } })
+        _this.$router.push({ name: 'events_map', query: { lat: position.coords.latitude, lng: position.coords.longitude, zoom: _this.zoom } })
       })
     }
   }

@@ -1,7 +1,12 @@
 <template>
-  <l-map ref="map" :zoom="zoom" :center="center" @ready="updateMapState" @moveend="updateMapState" @zoomend="updateMapState">
+   <l-map ref="map"
+          :zoom="zoom"
+          :center="lCenter"
+
+          @moveend="moveEnd"
+          >
     <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
-    <l-marker :lat-lng="marker"></l-marker>
+    <l-marker :lat-lng="userLocation"></l-marker>
     <l-geo-json v-for="event in events"
       :key="event.id"
       :geojson="event"
@@ -11,6 +16,8 @@
 </template>
 
 <script>
+import _ from 'lodash'
+
 import 'leaflet/dist/leaflet.css'
 
 // fix issue with css-loader rewriting urls in leaflet CSS
@@ -23,62 +30,52 @@ import { LMap, LTileLayer, LGeoJson, LMarker } from 'vue2-leaflet'
 export default {
   name: 'EventMap',
   components: { LMap, LTileLayer, LMarker, LGeoJson },
-  data () {
-    const lat = this.$route.query.lat || 0
-    const lng = this.$route.query.lng || 0
-    const zoom = parseInt(this.$route.query.zoom) || 20
-    return {
-      zoom: zoom,
-      center: L.latLng(lat, lng),
-      url: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
-      attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-      marker: L.latLng(lat, lng),
-      events: []
+  props: {
+    center: {
+      type: Array, // [lat, lng]
+      default: () => [0, 0]
+    },
+    zoom: {
+      type: Number,
+      default: 20
+    },
+    events: {
+      type: Array,
+      default: () => []
     }
   },
-  mounted: function () {
-    let _this = this
-    this.$nextTick(function () {
-      _this.updateEvents(_this.$refs.map.mapObject.getBounds())
-    })
+  data () {
+    return {
+      url: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
+      attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+
+      state: this.$store.state
+    }
+  },
+  computed: {
+    userLocation: function () {
+      return [this.state.userLat, this.state.userLng]
+    },
+    lCenter: function () {
+      // passing new object to avoid vue2leaflet updating the center array by reference
+      // https://vuejs.org/v2/guide/list.html#Caveats
+      return L.latLng(this.center[0], this.center[1])
+    }
   },
   methods: {
-    updateEvents: function (bounds) {
-      let _this = this
-
-      let geometry = {
-        type: 'Polygon',
-        coordinates: [[
-          [bounds._southWest.lng, bounds._northEast.lat],
-          [bounds._northEast.lng, bounds._northEast.lat],
-          [bounds._northEast.lng, bounds._southWest.lat],
-          [bounds._southWest.lng, bounds._southWest.lat],
-          [bounds._southWest.lng, bounds._northEast.lat]
-        ]]
+    moveEnd: function (e) {
+      const newCenter = [e.target.getCenter().lat, e.target.getCenter().lng]
+      if (!_.isEqual(this.center, newCenter)) {
+        this.$emit('update:center', newCenter)
       }
 
-      this.$citygram.getEvents(geometry)
-        .then(function (events) {
-          _this.events = events
-        }).catch(function (error) {
-          // TODO handle error
-          console.log(error)
-        })
-    },
-    updateMapState: function (e) {
-      const center = e.target.getCenter()
-      this.$router.replace({name: 'events_map',
-        query: {
-          lat: center.lat,
-          lng: center.lng,
-          zoom: e.target.getZoom(),
-          bounds: e.target.getBounds().toBBoxString()
-        }})
-
-      this.updateEvents(e.target.getBounds())
+      const newZoom = e.target.getZoom()
+      if (!_.isEqual(this.zoom, newZoom)) {
+        this.$emit('update:zoom', e.target.getZoom())
+      }
     },
     openEvent: function (e) {
-      this.$router.push({name: 'event', params: { id: e.layer.feature.id }})
+      this.$emit('event-selected', e.layer.feature.id)
     }
   }
 }

@@ -5,6 +5,7 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
+    "@turf/turf": "^5.1.6",
     "axios": "^0.18.0",
     "css-loader": "^1.0.0",
     "eslint-plugin-html": "^4.0.5",
