@@ -7,12 +7,7 @@
           >
     <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
     <l-control-locate :locate-on-mount=locateOnMount @locationfound=locationFound></l-control-locate>
-    <l-geo-json v-for="event in events"
-      :key="event.id"
-      :geojson="event"
-      :options=eventOptions
-      @click="openEvent"
-    ></l-geo-json>
+    <event-feature v-for="event in events" :key="event.id" :event=event @click=eventSelected></event-feature>
   </l-map>
 </template>
 
@@ -26,12 +21,14 @@ import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility
 import 'leaflet-defaulticon-compatibility'
 
 import L from 'leaflet'
-import { LMap, LTileLayer, LGeoJson, LMarker } from 'vue2-leaflet'
+import { LMap, LTileLayer } from 'vue2-leaflet'
+
 import LControlLocate from './LControlLocate.vue'
+import EventFeature from './EventFeature.vue'
 
 export default {
   name: 'EventMap',
-  components: { LMap, LTileLayer, LMarker, LGeoJson, LControlLocate },
+  components: { LMap, LTileLayer, LControlLocate, EventFeature },
   props: {
     center: {
       type: Array, // [lat, lng]
@@ -53,20 +50,7 @@ export default {
       attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
 
       state: this.$store.state,
-      locateOnMount: locate,
-      eventOptions: {
-        // convert points to small circles
-        pointToLayer: function (feature, latlng) {
-          return L.circleMarker(latlng, {
-            radius: 8,
-            fillColor: '#0071bc', // same color as primary buttons
-            color: '#000',
-            weight: 1,
-            opacity: 1,
-            fillOpacity: 0.8
-          })
-        }
-      }
+      locateOnMount: locate
     }
   },
   computed: {
@@ -96,8 +80,8 @@ export default {
       this.$store.setUserLocation(loc.latitude, loc.longitude)
     },
 
-    openEvent: function (e) {
-      this.$emit('event-selected', e.layer.feature.id)
+    eventSelected: function (event) {
+      this.$emit('event-selected', event.id)
     }
   }
 }

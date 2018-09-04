@@ -2,7 +2,7 @@
   <div>
     <div class='map-container'>
       <static-map :bounds=mapBounds>
-        <l-geo-json :geojson="event"></l-geo-json>
+        <event-feature :event=event></event-feature>
       </static-map>
     </div>
 
@@ -72,17 +72,17 @@
 <script>
 import moment from 'moment'
 import L from 'leaflet'
-import { LGeoJson } from 'vue2-leaflet'
 
 // TODO
 //   * Remove the word permit and put into data to generalize
 import formatPhoneNumber from '../filters/FormatPhoneNumber.js'
 
 import StaticMap from './StaticMap.vue'
+import EventFeature from './EventFeature.vue'
 
 export default {
   name: 'event',
-  components: { StaticMap, LGeoJson },
+  components: { StaticMap, EventFeature },
   data () {
     return {
       event: {
