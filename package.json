@@ -16,7 +16,7 @@
     "leaflet-defaulticon-compatibility": "^0.1.1",
     "libphonenumber-js": "^1.4.2",
     "moment": "^2.22.2",
-    "sfgov-pattern-lab": "https://github.com/SFDigitalServices/sfgov-pattern-lab.git#do-not-run-pattern-lab-on-install",
+    "sfgov-pattern-lab": "https://github.com/SFDigitalServices/sfgov-pattern-lab.git#master",
     "standard": "^11.0.1",
     "style-loader": "^0.21.0",
     "url-loader": "^1.0.1",
