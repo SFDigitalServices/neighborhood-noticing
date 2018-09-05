@@ -26,8 +26,8 @@ export default {
   },
   data () {
     return {
-      url: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
-      attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+      url: 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png',
+      attribution: 'Map tiles by Carto, under CC BY 3.0.<br/>Data by OpenStreetMap, under ODbL.',
       options: {
         // do not let the user interact with the map
         zoomControl: false,
