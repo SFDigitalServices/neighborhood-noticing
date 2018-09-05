@@ -19,13 +19,20 @@
               </span>
             </a>
           </div>
-          <!--<nav class="sfgov-main-navigation">
-            <ul>
-              <li><a href="#">Get future notifications</a></li>
-              <li><a href="#">About Neighborhood Notification</a></li>
-              <li><a href="#">Privacy Policy</a></li>
-            </ul>
-          </nav>-->
+          <nav role="navigation" class="sfgov-nav sfgov-mobile_nav-container">
+            <div class="sfgov-nav-inner">
+              <button class="sfgov-nav-close">
+                <i class="fa fa-times"></i>
+              </button>
+              <nav class="sfgov-main-navigation">
+                <ul class="menu">
+                  <li><a href="#">Get future notifications</a></li>
+                  <li><a href="#">About Neighborhood Notification</a></li>
+                  <li><a href="#">Privacy Policy</a></li>
+                </ul>
+              </nav>
+            </div>
+          </nav>
         </div>
       </div>
     </header>
@@ -36,6 +43,8 @@
 </template>
 
 <script>
+import 'sfgov-pattern-lab/dist/uswds/js/uswds.js'
+
 import 'sfgov-pattern-lab/dist/css/components.css'
 import './assets/css/sfgov-pattern-lab-overrides.css'
 
