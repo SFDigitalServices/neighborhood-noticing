@@ -10,6 +10,13 @@
 import L from 'leaflet'
 import { findRealParent, LGeoJson } from 'vue2-leaflet'
 
+/**
+ * Represents an event to be rendered on a map. Delegates to the LGeoJson component, but changes points to be rendered
+ * as small circles. I anticipate that we can include more feature styling in this file if we start to pull in
+ * non-point features.
+ *
+ * Expects to be included within an `LMap` Vue2Leaflet component.
+ */
 export default {
   name: 'EventFeature',
   components: { LGeoJson },
