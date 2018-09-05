@@ -11,6 +11,10 @@
       <div class="sfgov-banner__container sfgov-container">
         <h1>{{ event.properties.type }} Permit</h1>
 
+        <a :href="mailtoHref">
+          <i class="fas fa-share">Share</i>
+        </a>
+
         <p class="location" v-if="event.properties.location">
           {{ event.properties.location }}
         </p>
@@ -99,6 +103,9 @@ export default {
     }
   },
   computed: {
+    mailtoHref: function () {
+      return 'mailto:?to=&subject=Permit #' + this.event.properties.id + '&body=' + window.location
+    },
     mapBounds: function () {
       if (!this.event || !this.event.geometry) {
         return null
