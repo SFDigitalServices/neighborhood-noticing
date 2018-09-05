@@ -12,7 +12,7 @@
 
     <div class="nav-buttons">
       <div class="main">
-        <button @click="findLocation" class="sfgov-button">Get Started</button>
+        <router-link tag="button" :to="{ name: 'events_map', query: { locate: true, lat: lat, lng: lng } }">Get started</router-link>
       </div>
 
       <div>
@@ -31,15 +31,6 @@ export default {
       lat: process.env.VUE_APP_MAP_LAT,
       lng: process.env.VUE_APP_MAP_LNG,
       zoom: process.env.VUE_APP_MAP_ZOOM
-    }
-  },
-  methods: {
-    findLocation: function (e) {
-      let _this = this
-      navigator.geolocation.getCurrentPosition(function (position) {
-        _this.$store.setUserLocation(position.coords.latitude, position.coords.longitude)
-        _this.$router.push({ name: 'events_map', query: { lat: position.coords.latitude, lng: position.coords.longitude, zoom: _this.zoom } })
-      })
     }
   }
 }

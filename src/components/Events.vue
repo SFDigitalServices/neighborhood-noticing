@@ -131,8 +131,6 @@ export default {
       const northEastBound = destination(centerPoint, diagonalDistance, angle, {units: 'kilometers'})
       const southWestBound = destination(centerPoint, diagonalDistance, -90 - angle, {units: 'kilometers'})
 
-      console.log('query bounds', southWestBound.geometry.coordinates, northEastBound.geometry.coordinates)
-
       const bboxFeature = bboxPolygon([
         southWestBound.geometry.coordinates[0],
         southWestBound.geometry.coordinates[1],
