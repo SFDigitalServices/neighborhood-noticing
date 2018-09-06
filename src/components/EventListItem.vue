@@ -12,7 +12,7 @@
     <p>
       Contact: <a :href="'tel:' + this.$options.filters.formatPhoneNumber(event.properties.originator_phone)">{{ event.properties.originator_phone | formatPhoneNumber }}</a>
     </p>
-    <p>
+    <p v-if=event_distance>
       Distance: {{ event_distance | formatDistance }}
     </p>
     <p>
@@ -33,6 +33,10 @@ export default {
   props: ['event'],
   computed: {
     event_distance: function () {
+      if (!this.$store.state.userLat || !this.$store.state.userLng) {
+        return null
+      }
+
       // default map CRS
       return L.CRS.EPSG3857.distance(
         L.latLng(this.event.geometry.coordinates[1], this.event.geometry.coordinates[0]),
