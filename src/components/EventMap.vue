@@ -80,7 +80,7 @@ export default {
       this.$store.setUserLocation(loc.latitude, loc.longitude)
       this.$router.replace({
         query: Object.assign({}, this.$route.query, {
-          locate: undefined,
+          locate: undefined
         })
       })
     },
