@@ -9,7 +9,7 @@
     <!-- pattern-lab/molecules-hero-banner -->
     <header class="sfgov-banner">
       <div class="sfgov-banner__container sfgov-container">
-        <h1>{{ event.properties.type }} Permit</h1>
+        <h1>{{ event.properties.type.subtype.name }} {{ event.properties.type.name }}</h1>
 
         <a :href="mailtoHref">
           <i class="fas fa-share">Share</i>
@@ -30,9 +30,12 @@
         </p>
 
         <p class="description">
-          Description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sed lobortis erat, a hendrerit mauris. Proin nec turpis nunc. Fusce risus orci, ornare vel dictum eget, volutpat non purus. Donec vitae varius.
+          {{ event.properties.type.subtype.description }}
         </p>
-        <p><a href="#">Permit # {{ event.properties.id }}</a></p>
+        <!-- TODO link to an online representation of the event if one exists -->
+        <p>
+          {{ event.properties.type.name }}# {{ event.properties.id }}
+        </p>
       </div>
     </header>
 
@@ -104,7 +107,7 @@ export default {
   },
   computed: {
     mailtoHref: function () {
-      return 'mailto:?to=&subject=Permit #' + this.event.properties.id + '&body=' + window.location
+      return 'mailto:?to=&subject=' + this.event.properties.type.name + ' #' + this.event.properties.id + '&body=' + window.location
     },
     mapBounds: function () {
       if (!this.event || !this.event.geometry) {
