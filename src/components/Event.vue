@@ -32,7 +32,10 @@
         <p class="description">
           {{ event.properties.type.subtype.description }}
         </p>
-        <p><a href="#">{{ event.properties.type.name }}# {{ event.properties.id }}</a></p>
+        <!-- TODO link to an online representation of the event if one exists -->
+        <p>
+          {{ event.properties.type.name }}# {{ event.properties.id }}
+        </p>
       </div>
     </header>
 
