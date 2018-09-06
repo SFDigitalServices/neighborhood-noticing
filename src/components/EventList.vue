@@ -8,9 +8,9 @@
       <p>
         No results in your search range.
       </p>
-      <p @click="expandSearch">
+      <button @click="expandSearch">
         Click to expand.
-      </p>
+      </button>
 
     </div>
   </div>
