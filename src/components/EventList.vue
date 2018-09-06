@@ -39,7 +39,7 @@ export default {
       this.$emit('event-selected', id)
     },
 
-    expandSearch: function() {
+    expandSearch: function () {
       this.$emit('update:zoom', this.zoom - 1)
     }
   }
