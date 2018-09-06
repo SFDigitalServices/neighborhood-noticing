@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <event-list-item @selected=eventSelected class='section' v-for="event in events"
                 :key="event.id"
                 :event="event"

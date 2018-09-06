@@ -1,31 +1,37 @@
 <template>
-  <div id='start-page'>
-    <!-- pattern-lab/molecules-hero-banner -->
-    <header class="sfgov-banner">
-      <div class="sfgov-banner__container sfgov-container">
-        <h1>Learn about projects happening in your area.</h1>
+  <div>
+    <div class="container" id='start-page'>
+      <!-- pattern-lab/molecules-hero-banner -->
+      <header class="sfgov-banner">
+        <div class="sfgov-banner__container sfgov-container">
+          <h1>Learn about projects happening in your area.</h1>
+          <div>
+            Discover and receive notifications about projects, events and closures happening in San Francisco neighborhoods.
+          </div>
+        </div>
+      </header>
+
+      <div class="nav-buttons">
+        <div class="main">
+          <router-link tag="button" :to="{ name: 'events_map', query: { locate: true, lat: lat, lng: lng } }">Get started</router-link>
+        </div>
+
         <div>
-          Discover and receive notifications about projects, events and closures happening in San Francisco neighborhoods.
+          <router-link :to="{ name: 'events_map', query: { lat: lat, lng: lng, zoom: zoom } }">Search using an address</router-link>
         </div>
       </div>
-    </header>
-
-    <div class="nav-buttons">
-      <div class="main">
-        <router-link tag="button" :to="{ name: 'events_map', query: { locate: true, lat: lat, lng: lng } }">Get started</router-link>
-      </div>
-
-      <div>
-        <router-link :to="{ name: 'events_map', query: { lat: lat, lng: lng, zoom: zoom } }">Search using an address</router-link>
-      </div>
+      <div class="map-underlay"></div>
     </div>
-    <div class="map-underlay"></div>
+    <signup-banner class="signup-banner"></signup-banner>
   </div>
 </template>
 
 <script>
+import SignupBanner from './SignupBanner.vue'
+
 export default {
-  name: 'start-page',
+  name: 'StartPage',
+  components: { SignupBanner },
   data: function () {
     return {
       lat: process.env.VUE_APP_MAP_LAT,

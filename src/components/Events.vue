@@ -30,18 +30,20 @@
         @event-selected=openEvent
          ></router-view>
     </div>
+    <signup-banner class="signup-banner"></signup-banner>
   </div>
 </template>
 
 <script>
 import LocationSearch from './LocationSearch.vue'
+import SignupBanner from './SignupBanner.vue'
 
 import _ from 'lodash'
 import { bboxPolygon, destination } from '@turf/turf'
 
 export default {
   name: 'Events',
-  components: { LocationSearch },
+  components: { LocationSearch, SignupBanner },
   data () {
     return {
       center: [0, 0],
