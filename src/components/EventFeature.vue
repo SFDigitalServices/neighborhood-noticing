@@ -43,7 +43,7 @@ export default {
           return L.circleMarker(latlng, {
             radius: 8,
             fillColor: '#0071bc', // same color as primary buttons
-            color: '#000',
+            color: '#0071bc',
             weight: 1,
             opacity: 1,
             fillOpacity: 0.8

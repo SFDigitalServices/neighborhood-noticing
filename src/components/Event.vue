@@ -9,11 +9,10 @@
     <!-- pattern-lab/molecules-hero-banner -->
     <header class="sfgov-banner">
       <div class="sfgov-banner__container sfgov-container">
-        <h1>{{ event.properties.type }} Permit</h1>
-
-        <a :href="mailtoHref">
-          <i class="fas fa-share">Share</i>
+        <a class="shareit" :href="mailtoHref">
+          <i class="fas fa-share"></i>
         </a>
+        <h1>{{ event.properties.type.subtype.name }} {{ event.properties.type.name }}</h1>
 
         <p class="location" v-if="event.properties.location">
           {{ event.properties.location }}
@@ -22,7 +21,7 @@
           Address has not been provided. Please <a href="tel:1-415-311">call 311</a> for details.
         </p>
 
-        <p class="dates" v-if="(event.properties.start && event.properties.end)">
+        <p class="dates" v-if="(event.properties.start && event.properties.end)">From 
           {{ event.properties.start | formatDate }} to {{ event.properties.end | formatDate }}
         </p>
         <p v-else>
@@ -30,7 +29,7 @@
         </p>
 
         <p class="description">
-          Description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sed lobortis erat, a hendrerit mauris. Proin nec turpis nunc. Fusce risus orci, ornare vel dictum eget, volutpat non purus. Donec vitae varius.
+          {{ event.properties.type.subtype.description }}
         </p>
         <p><a href="#">Permit # {{ event.properties.id }}</a></p>
       </div>
@@ -104,7 +103,7 @@ export default {
   },
   computed: {
     mailtoHref: function () {
-      return 'mailto:?to=&subject=Permit #' + this.event.properties.id + '&body=' + window.location
+      return 'mailto:?to=&subject=' + this.event.properties.type.name + ' #' + this.event.properties.id + '&body=' + window.location
     },
     mapBounds: function () {
       if (!this.event || !this.event.geometry) {
@@ -127,6 +126,34 @@ export default {
 </script>
 
 <style scoped>
+
+.sfgov-banner .sfgov-banner__container {
+  padding-top: 2em;
+  padding-bottom: 1em;
+  position: relative;
+}
+
+header h1 {
+  font-size: 1.5em;
+  padding: 0 2em 0 0;
+}
+
+header a,
+header a:visited,
+header a:hover,
+header a:active {
+  color: #fff !important;
+ } 
+
+.shareit {
+  position: absolute;
+  top: 2.35em;
+  right: 0;
+  padding: .3em;
+  border: 1px solid #fff;
+  border-radius: 5px;
+}
+
 .section h2 {
   font-family: "Roboto", san-serif;
   font-size: 1em;
@@ -139,16 +166,26 @@ export default {
   padding: 2em 1em;
 }
 
-p {
-  margin: 0 0 .75em;
+.sfgov-banner p {
+  margin: 0 0 1em;
+}
+
+.sfgov-banner .description {
+  font-size: .875em;
+  font-weight: normal !important;
+}
+
+.sfgov-width-one-half p {
+  color: #000;
+  padding-right: 1em;
 }
 
 .dates, .location {
-  font-weight: 700;
+  font-weight: 500;
 }
 
 .location {
-  margin-bottom: .25em;
+  margin-bottom: .5em !important;
 }
 
 .map-container {

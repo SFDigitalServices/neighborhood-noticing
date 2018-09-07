@@ -63,11 +63,15 @@ export default {
   .list-item {
     padding: 0 10rem 1rem 2rem;
     position: relative;
+    background: url(../assets/img/point-right.png) no-repeat 95% 50%;
   }
   .list-item h2 {
     font-size: 2rem;
     margin-bottom: .75rem;
     margin-top: 1rem;
+    color: #0071bc;
+    text-decoration: underline;
+    cursor: pointer;
   }
   .list-item p {
     margin-top: 0;
