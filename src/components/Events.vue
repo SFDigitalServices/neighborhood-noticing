@@ -126,12 +126,12 @@ export default {
 
       const diagonalPixels = Math.hypot(this.$refs.view.$el.clientHeight, this.$refs.view.$el.clientWidth)
 
-      const angle = Math.asin(this.$refs.view.$el.clientHeight / diagonalPixels) * (180 / Math.PI)
+      const angle = Math.asin(this.$refs.view.$el.clientWidth / diagonalPixels) * (180 / Math.PI)
 
       const centerPoint = [this.center[1], this.center[0]] // turf wants [lng, lat]
       const diagonalDistance = diagonalPixels / 2 * kilometersPerPixel(this.center[0], this.zoom)
       const northEastBound = destination(centerPoint, diagonalDistance, angle, {units: 'kilometers'})
-      const southWestBound = destination(centerPoint, diagonalDistance, -90 - angle, {units: 'kilometers'})
+      const southWestBound = destination(centerPoint, diagonalDistance, -180 + angle, {units: 'kilometers'})
 
       const bboxFeature = bboxPolygon([
         southWestBound.geometry.coordinates[0],

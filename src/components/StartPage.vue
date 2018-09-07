@@ -13,7 +13,7 @@
 
       <div class="nav-buttons">
         <div class="main">
-          <router-link class="sfgov-button" tag="button" :to="{ name: 'events_map', query: { locate: true, lat: lat, lng: lng } }">Get started</router-link>
+          <router-link class="sfgov-button" tag="button" :to="{ name: 'events_map', query: { locate: true, lat: lat, lng: lng, zoom: zoom } }">Get started</router-link>
         </div>
 
         <div>
