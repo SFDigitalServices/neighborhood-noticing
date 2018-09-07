@@ -66,6 +66,13 @@ export default {
 header, .section {
   border-bottom: solid #aeb0b5 1px;
 }
+header .sfgov-container--full {
+  padding: 0 0 0 0 !important;
+}
+.sfgov-logo__container {
+  padding-top: .3em;
+}
+
 </style>
 
 <style scoped>

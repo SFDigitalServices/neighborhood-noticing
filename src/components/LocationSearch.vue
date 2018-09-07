@@ -1,7 +1,7 @@
 <template>
   <div>
     <input ref="autocomplete"
-           placeholder="Search"
+           placeholder="Search a location"
            class="search-location"
            onfocus="value = ''"
            type="text" />
@@ -30,3 +30,18 @@ export default {
   }
 }
 </script>
+
+
+<style scoped>
+  .search-location {
+    border: none;
+    border-radius: 7px;
+    font-size: 14px;
+    height: auto;
+  }
+  div {
+    background:#c8e1ff;
+    padding: .25em .5em;
+  }
+
+</style>

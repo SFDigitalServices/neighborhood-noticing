@@ -8,12 +8,11 @@
 
     <!-- pattern-lab/molecules-hero-banner -->
     <header class="sfgov-banner">
+      <a class="shareit" :href="mailtoHref">
+        <i class="fas fa-share"></i>
+      </a>
       <div class="sfgov-banner__container sfgov-container">
         <h1>{{ event.properties.type.subtype.name }} {{ event.properties.type.name }}</h1>
-
-        <a :href="mailtoHref">
-          <i class="fas fa-share">Share</i>
-        </a>
 
         <p class="location" v-if="event.properties.location">
           {{ event.properties.location }}
@@ -23,7 +22,7 @@
         </p>
 
         <p class="dates" v-if="(event.properties.start && event.properties.end)">
-          {{ event.properties.start | formatDate }} to {{ event.properties.end | formatDate }}
+          From {{ event.properties.start | formatDate }} to {{ event.properties.end | formatDate }}
         </p>
         <p v-else>
           This information has not been provided. Please <a href="tel:1-415-311">call 311</a> for details.
@@ -32,6 +31,7 @@
         <p class="description">
           {{ event.properties.type.subtype.description }}
         </p>
+
         <!-- TODO link to an online representation of the event if one exists -->
         <p>
           {{ event.properties.type.name }}# {{ event.properties.id }}
@@ -49,18 +49,22 @@
                 {{ event.properties.originator }}
               </p>
               <p v-if="event.properties.originator_phone">
+                <button class="default">
                 <a :href="'tel:' + this.$options.filters.formatPhoneNumber(event.properties.originator_phone)">{{ event.properties.originator_phone | formatPhoneNumber }}</a>
+                </button>
               </p>
             </template>
             <p v-else>
-              This information has not been provided. Please <a href="tel:1-415-311">call 311</a> for details.
+              Information not provided.
+              <button class="default"><a href="tel:1-415-311">call 311</a></button>
             </p>
           </div><!--sfgov-width-one-half-->
 
           <div class="sfgov-width-one-half">
-            <p>24-7 access, everyday
-              <a href="tel:10415311">Call 3-1-1</a>
-            </p>
+            <p>24 hours a day</p>
+              <button class="default">
+                <a href="tel:10415311">Call 3-1-1</a>
+              </button>
           </div><!--sfgov-width-one-half-->
 
 
@@ -69,7 +73,7 @@
     </div>
 
     <div v-if="event.properties.description" class="section">
-      <h2>Project description</h2>
+      <h2>City agency notes:</h2>
         {{ event.properties.description }}
       </p>
     </div>
@@ -130,28 +134,105 @@ export default {
 </script>
 
 <style scoped>
-.section h2 {
+
+.sfgov-banner .sfgov-banner__container {
+  padding-top: 2em;
+  padding-bottom: 1em;
+  position: relative;
+}
+
+.container {
+  padding-bottom: 2em;
+  margin-bottom: 2em;
+}
+
+header .location {
+  text-transform: capitalize;
+}
+
+header {
+  position: relative;
+  padding-top: 1em;
+}
+
+header h1 {
+  font-size: 1.4em;
+}
+
+header a,
+header a:visited,
+header a:hover,
+header a:active {
+  color: #fff !important;
+ } 
+
+.shareit {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 0 0em 0 0;
+  text-align: right;
+  background: #1d84c8;
+}
+
+.shareit i {
+  padding: .5em;
+}
+
+h2 {
   font-family: "Roboto", san-serif;
   font-size: 1em;
   line-height: 1.4;
-  margin: 0 0 .75em;
+  margin: 0 0 1em;
   padding: 0;
+}
+
+.sfgov-width-one-half p {
+  margin: 0;
+}
+
+.sfgov-width-one-half p:first-child {
+  min-height: 2.75em;
 }
 
 .section {
   padding: 2em 1em;
 }
 
+.sfgov-banner p {
+  margin: 0 0 1em;
+}
+
+.sfgov-banner .description {
+  font-size: 1em;
+  font-weight: normal !important;
+}
+
+.sfgov-width-one-half p {
+  color: #000;
+  padding-right: 1em;
+}
+
 p {
-  margin: 0 0 .75em;
+  line-height: 1.3;
+}
+
+button a:link,
+button a:visited,
+button a:hover,
+button a:active {
+  color: #fff;
+  text-decoration: none;
+  font-size: .875em;
 }
 
 .dates, .location {
-  font-weight: 700;
+  font-weight: 500;
 }
 
 .location {
-  margin-bottom: .25em;
+  margin-bottom: .5em !important;
 }
 
 .map-container {

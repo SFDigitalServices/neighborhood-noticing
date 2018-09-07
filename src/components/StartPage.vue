@@ -4,16 +4,16 @@
       <!-- pattern-lab/molecules-hero-banner -->
       <header class="sfgov-banner">
         <div class="sfgov-banner__container sfgov-container">
-          <h1>Learn about projects happening in your area.</h1>
+          <h1>Learn about projects happening near you.</h1>
           <div>
-            Discover and receive notifications about projects, events and closures happening in San Francisco neighborhoods.
+            Discover and get notifications about construction, events, and steet and sidewalk closures.
           </div>
         </div>
       </header>
 
       <div class="nav-buttons">
         <div class="main">
-          <router-link tag="button" :to="{ name: 'events_map', query: { locate: true, lat: lat, lng: lng } }">Get started</router-link>
+          <router-link class="sfgov-button" tag="button" :to="{ name: 'events_map', query: { locate: true, lat: lat, lng: lng } }">Get started</router-link>
         </div>
 
         <div>
