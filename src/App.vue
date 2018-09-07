@@ -61,6 +61,7 @@ export default {
   /* allow flexing of divs to fill viewport vertically without overflow */
   display: flex;
   flex-flow: column;
+  flex-basis: content;
 }
 
 header, .section {
