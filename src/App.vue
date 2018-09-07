@@ -26,9 +26,10 @@
               </button>
               <nav class="sfgov-main-navigation">
                 <ul class="menu">
-                  <li><a href="#">Get future notifications</a></li>
-                  <li><a href="#">About Neighborhood Notification</a></li>
-                  <li><a href="#">Privacy Policy</a></li>
+                  <li><router-link to="notifications_signup">Get future notifications</router-link></li>
+                  <li><router-link to="about">About Neighborhood Notification</router-link></li>
+                  <li><router-link to="privacy">Privacy Policy</router-link></li>
+                  <li><router-link to="disclaimer">Disclaimer</router-link></li>
                 </ul>
               </nav>
             </div>
