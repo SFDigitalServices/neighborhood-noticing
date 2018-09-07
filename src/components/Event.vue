@@ -95,7 +95,12 @@ export default {
       event: {
         type: 'Feature',
         geometry: null,
-        properties: {}
+        properties: {
+          type: {
+            subtype: {
+            }
+          }
+        }
       }
     }
   },

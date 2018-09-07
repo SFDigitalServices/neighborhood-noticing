@@ -78,6 +78,11 @@ export default {
 
     locationFound: function (loc) {
       this.$store.setUserLocation(loc.latitude, loc.longitude)
+      this.$router.replace({
+        query: Object.assign({}, this.$route.query, {
+          locate: undefined
+        })
+      })
     },
 
     eventSelected: function (event) {
