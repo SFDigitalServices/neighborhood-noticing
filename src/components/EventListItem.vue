@@ -4,7 +4,7 @@
       {{ event_distance | formatDistance }}
     </p>
     <h2 @click="$emit('selected', event.id)">
-      {{ event.properties.type }}
+      {{ event.properties.type.subtype.name }} {{ event.properties.type.name }}
     </h2>
     <p>
       {{ event.properties.location }}

@@ -9,12 +9,12 @@
 
     <form v-on:submit.prevent="onSubmit">
       <div>
-        <label for="address">From this address: </label>
+        <label class="form-header" for="address">From this address: </label>
         <input v-model="address" required>
       </div>
 
       <fieldset>
-        <legend>Within a distance of: </legend>
+        <legend class="form-header">Within a distance of: </legend>
 
         <!-- distances in meters -->
 
@@ -32,6 +32,9 @@
 
         <input type="radio" id="5_mile" v-model.number="distance" value="8046" />
         <label for="5_mile">5 miles</label>
+
+        <input type="radio" id="5_mile" v-model.number="distance" value="8046" />
+        <label for="5_mile">Entire city</label>
       </fieldset>
 
       <div class='map-container'>
@@ -44,13 +47,13 @@
       </div>
 
       <fieldset>
-        <legend>How would you like to receive notifications?</legend>
+        <legend class="form-header">How would you like to receive notifications?</legend>
 
         <input type="radio" id="individual" v-model="frequency" value="individual" />
         <label for="individual">Individual emails</label>
 
         <input type="radio" id="weekly" v-model="frequency" value="weekly" />
-        <label for="weekly">Weekly email summaries</label>
+        <label for="weekly">Weekly email</label>
       </fieldset>
 
       <div>
@@ -116,8 +119,42 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .map-container {
   height: 200px;
+}
+[type=checkbox]+label, [type=radio]+label {
+  width: 46%;
+  float:left;
+  padding: 1.5em 0em;
+  text-align: center;
+  margin: .4em 0;
+  margin-right: 4%;
+  border: 1px solid #5b616b;
+  border-radius: 5px;
+}
+
+form {
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+fieldset {
+  margin-top: 2em;
+  margin-bottom: 1em;
+}
+
+.sfgov-banner .sfgov-banner__container {
+    padding: 1em 0 0;
+}
+
+.form-header {
+  font-family: "Roboto", san-serif;
+  font-size: 1em;
+  line-height: 1.4;
+  margin: 2em 0 .5em;
+  padding: 0;
+  font-weight: bold;
 }
 </style>
