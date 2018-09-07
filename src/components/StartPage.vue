@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <div class="container" id='start-page'>
       <!-- pattern-lab/molecules-hero-banner -->
       <header class="sfgov-banner">
@@ -78,4 +78,11 @@ export default {
 .nav-buttons .main {
   margin-bottom: 1.5rem;
 }
+
+#signup-banner {
+  position:absolute;
+  bottom:0;
+  left: 0;
+}
+
 </style>

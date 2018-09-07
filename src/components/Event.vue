@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <div class='map-container'>
       <static-map :bounds=mapBounds>
         <event-feature :event=event></event-feature>
@@ -234,6 +234,12 @@ button a:active {
 
 .dates, .location {
   font-weight: 500;
+}
+
+#signup-banner {
+  position:absolute;
+  bottom:0;
+  left: 0;
 }
 
 .location {
