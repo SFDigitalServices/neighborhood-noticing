@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <div class="container" id='start-page'>
       <!-- pattern-lab/molecules-hero-banner -->
       <header class="sfgov-banner">
@@ -45,7 +45,6 @@ export default {
 <style scoped>
 #start-page {
   position: relative; /* needed for underlaid image */
-  height: 100%;
 
   padding-top: 15%; /* move banner down */
 }
