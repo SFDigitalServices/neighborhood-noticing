@@ -2,6 +2,9 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 import StartPage from '../components/StartPage.vue'
+import AboutPage from '../components/AboutPage.vue'
+import PrivacyPage from '../components/PrivacyPage.vue'
+import DisclaimerPage from '../components/DisclaimerPage.vue'
 
 import Event from '../components/Event.vue'
 
@@ -16,6 +19,9 @@ Vue.use(Router)
 export default new Router({
   routes: [
     { path: '/', component: StartPage },
+    { path: '/about', component: AboutPage },
+    { path: '/privacy', component: PrivacyPage },
+    { path: '/disclaimer', component: DisclaimerPage },
     {
       name: 'events',
       path: '/events',
